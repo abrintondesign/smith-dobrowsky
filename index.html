@@ -8,2844 +8,269 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/styles.css" />
-<link rel="preload" as="image" href="assets/GettyImages-2165218184.jpg" />
-
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/nav.css" />
+  <link rel="preload" as="image" href="assets/GettyImages-2231150857.jpg" />
   <style>
-    /* ═══════════════════════════════════════════════════════
-       HERO — Complete override of accumulated styles.css passes
-       Inline <style> wins cascade over linked stylesheet.
-       !important used only where styles.css declares !important.
-    ═══════════════════════════════════════════════════════ */
+    /* ── Hero cinematic blur pass ── */
 
-    /* ── Nav refinement ───────────────────────────────────── */
-    .nav {
-      height: 74px !important;
-      padding: 0 60px !important;
-    }
-    .nav__cta {
-      padding: 13px 28px !important;
-      font-size: 11px !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.14em !important;
-      background: #f0ece3 !important;
-      color: #1a1a1a !important;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.18) !important;
-      transition: box-shadow 0.2s, background 0.2s, transform 0.15s !important;
-    }
-    .nav__cta:hover {
-      background: #e8e4dc !important;
-      box-shadow: 0 3px 14px rgba(0,0,0,0.22) !important;
-      transform: translateY(-1px) !important;
-    }
-
-    /* Mobile toggle — reset all the !important position hacks */
-    @media (max-width: 960px) {
-      .nav { height: 68px !important; padding: 0 24px !important; }
-      .nav__toggle {
-        display: flex !important;
-        position: static !important;
-        top: auto !important; right: auto !important; left: auto !important;
-        transform: none !important;
-        margin-left: auto;
-        width: 26px !important; height: 18px !important;
-        z-index: auto !important;
-        opacity: 1 !important; visibility: visible !important;
-      }
-      .nav__toggle::before { display: none !important; }
-      .nav__toggle span { opacity: 1 !important; background: #fff !important; height: 1.5px !important; }
-    }
-    @media (max-width: 600px) {
-      .nav { height: 64px !important; padding: 0 18px !important; }
-      .nav__toggle {
-        position: static !important;
-        top: auto !important; right: auto !important; left: auto !important;
-      }
-      .nav__toggle::before { display: none !important; }
-      .nav__toggle span { opacity: 1 !important; background: #fff !important; }
-    }
-
-    /* ── Hero container ───────────────────────────────────── */
-    .hero {
+    /*
+      Remove the uniform blur from .hero__left itself — it creates a hard
+      vertical "blur wall" at the right edge of the element.
+      The ::before pseudo-element handles blur with a mask fade instead.
+    */
+    body.home-page .hero__left {
       position: relative !important;
-      min-height: 100vh !important;
-      overflow: hidden !important;
-      background: #05090f !important;
-      background-image: none !important;
-      isolation: isolate !important;
-    }
-
-    /* Video — fills hero__video-wrap in the right panel */
-    .hero__video {
-      position: absolute !important;
-      inset: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: cover !important;
-      object-position: center center !important;
-      z-index: 1 !important;
-      filter: saturate(0.92) brightness(0.86) !important;
-      pointer-events: none !important;
-      will-change: opacity !important;
-      transform: translateZ(0) !important;
-      opacity: 0 !important;
-      transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    }
-    .hero__video.is-ready {
-      opacity: 1 !important;
-    }
-
-    /* Subtle top anchor — grounds the nav zone */
-    .hero::before {
-      content: '' !important;
-      position: absolute !important;
-      inset: 0 !important;
-      background: linear-gradient(to bottom, rgba(5,9,15,0.24) 0%, transparent 14%) !important;
-      pointer-events: none !important;
-      z-index: 1 !important;
-    }
-
-    /* Subtle gold warmth — left column accent only */
-    .hero::after {
-      content: '' !important;
-      position: absolute !important;
-      left: 0 !important;
-      top: 0 !important;
-      bottom: 0 !important;
-      width: 54% !important;
-      background: radial-gradient(ellipse at 10% 28%, rgba(180,168,150,0.07), transparent 58%) !important;
-      pointer-events: none !important;
-      z-index: 1 !important;
-    }
-
-    /* Unused decor elements from styles.css — hidden */
-    .hero__texture,
-    .hero__glow,
-    .hero__frame,
-    .hero__badge,
-    .hero__placeholder,
-    .hero__visual-lines,
-    .hero__corner {
-      display: none !important;
-    }
-
-    /* ── Two-column: text left | video right ─────────────── */
-    .hero__inner {
-      display: grid !important;
-      grid-template-columns: 54fr 46fr !important;
-      min-height: 100vh !important;
-      max-width: none !important;
-      width: 100% !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      gap: 0 !important;
-      align-items: stretch !important;
-      position: relative !important;
-      z-index: 2 !important;
-    }
-
-    /* ── Left column — content ────────────────────────────── */
-    .hero__left {
-      position: relative !important;
-      z-index: 2 !important;
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: center !important;
-      padding: 80px 56px 80px 80px !important;
-      max-width: none !important;
-      flex: none !important;
-      width: auto !important;
-    }
-
-    /* Vertical gold rule — left decorative accent */
-    .hero__left::before {
-      content: '';
-      position: absolute;
-      left: 56px;
-      top: 14%;
-      bottom: 14%;
-      width: 2px;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      /* Reduce left-edge opacity so the blurred photo is atmospherically
+         visible through the dark gradient, not completely masked */
       background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(180,168,150,0.7) 18%,
-        rgba(180,168,150,0.7) 82%,
-        transparent 100%
-      );
-    }
-
-    /* ── Overline ─────────────────────────────────────────── */
-    .hero__overline {
-      display: flex !important;
-      align-items: flex-start !important;
-      gap: 14px !important;
-      margin-bottom: 26px !important;
-      font-size: 10px !important;
-      font-weight: 500 !important;
-      letter-spacing: 0.2em !important;
-      text-transform: uppercase !important;
-      color: rgba(180,168,150,0.82) !important;
-      line-height: 1.7 !important;
-      max-width: 480px;
-    }
-
-    .hero__overline-rule {
-      display: block !important;
-      width: 28px !important;
-      min-width: 28px !important;
-      height: 1px !important;
-      background: rgba(180,168,150,0.75) !important;
-      margin-top: 6px !important;
-      flex-shrink: 0 !important;
-    }
-
-    /* ── Headline ─────────────────────────────────────────── */
-    .hero__h1 {
-      margin: 0 0 28px !important;
-      max-width: none !important;
-    }
-
-    /* Location badge — sits above the display type */
-    .hero__h1-location {
-      display: block !important;
-      font-family: 'Inter', sans-serif !important;
-      font-size: 11px !important;
-      font-weight: 500 !important;
-      letter-spacing: 0.28em !important;
-      text-transform: uppercase !important;
-      color: rgba(180,168,150,0.78) !important;
-      line-height: 1 !important;
-      margin-bottom: 22px !important;
-    }
-
-    /* Main headline — massive display */
-    .hero__h1-line {
-      display: block !important;
-      font-size: clamp(52px, 5.5vw, 84px) !important;
-      font-weight: 700 !important;
-      color: #ffffff !important;
-      line-height: 0.93 !important;
-      letter-spacing: -0.035em !important;
-      text-shadow: 0 2px 32px rgba(0,0,0,0.75), 0 1px 6px rgba(0,0,0,0.55) !important;
-    }
-
-    /* Italic emotional counterpoint */
-    .hero__h1-em {
-      display: block !important;
-      font-size: clamp(52px, 5.5vw, 84px) !important;
-      font-weight: 400 !important;
-      font-style: italic !important;
-      color: rgba(255,255,255,0.82) !important;
-      line-height: 0.93 !important;
-      letter-spacing: -0.028em !important;
-      text-shadow: 0 2px 32px rgba(0,0,0,0.75), 0 1px 6px rgba(0,0,0,0.55) !important;
-    }
-
-    /* ── Supporting paragraph ─────────────────────────────── */
-    .hero__sub {
-      font-size: 15.5px !important;
-      font-weight: 300 !important;
-      color: rgba(255,255,255,0.58) !important;
-      line-height: 1.74 !important;
-      margin: 0 0 32px !important;
-      max-width: 440px !important;
-      text-shadow: 0 1px 16px rgba(0,0,0,0.65) !important;
-    }
-
-    /* ── Stats row ────────────────────────────────────────── */
-    .hero__trust {
-      display: flex !important;
-      align-items: center !important;
-      grid-template-columns: none !important;
-      gap: 0 !important;
-      margin: 0 0 32px !important;
-      padding: 16px 0 !important;
-      border-top: 1px solid rgba(255,255,255,0.1) !important;
-      border-bottom: 1px solid rgba(255,255,255,0.1) !important;
-      max-width: 440px !important;
-    }
-
-    .hero__trust-item {
-      padding-right: 24px !important;
-      padding-left: 0 !important;
-    }
-    .hero__trust-item:not(:first-child) {
-      padding-left: 24px !important;
-      border-left: 1px solid rgba(180,168,150,0.22) !important;
-    }
-
-    .hero__trust-value {
-      display: block !important;
-      font-family: 'Playfair Display', Georgia, serif !important;
-      font-size: 26px !important;
-      font-weight: 600 !important;
-      color: #ffffff !important;
-      line-height: 1 !important;
-    }
-
-    .hero__trust-label {
-      display: block !important;
-      margin-top: 5px !important;
-      font-size: 9.5px !important;
-      font-weight: 600 !important;
-      letter-spacing: 0.14em !important;
-      text-transform: uppercase !important;
-      color: rgba(180,168,150,0.68) !important;
-      line-height: 1.4 !important;
-    }
-
-    /* ── Lead-capture form ────────────────────────────────── */
-    .hero__form {
-      background: rgba(255,255,255,0.04) !important;
-      border: 1px solid rgba(255,255,255,0.12) !important;
-      padding: 20px 22px !important;
-      margin-bottom: 22px !important;
-      max-width: 480px !important;
-      box-shadow: none !important;
-    }
-
-    .hero__form-label {
-      display: block !important;
-      font-size: 9.5px !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.2em !important;
-      text-transform: uppercase !important;
-      color: rgba(180,168,150,0.88) !important;
-      margin-bottom: 12px !important;
-    }
-
-    .hero__form-row {
-      display: flex !important;
-      min-height: 52px !important;
-      box-shadow: none !important;
-    }
-
-    .hero__form-input {
-      flex: 1 !important;
-      min-width: 0 !important;
-      min-height: 52px !important;
-      background: rgba(255,255,255,0.055) !important;
-      border: 1px solid rgba(255,255,255,0.14) !important;
-      border-right: none !important;
-      color: #ffffff !important;
-      font-family: 'Inter', sans-serif !important;
-      font-size: 13.5px !important;
-      padding: 0 16px !important;
-      outline: none !important;
-      transition: border-color 0.2s !important;
-      border-radius: 0 !important;
-    }
-    .hero__form-input::placeholder { color: rgba(255,255,255,0.26) !important; }
-    .hero__form-input:focus {
-      border-color: rgba(180,168,150,0.5) !important;
-      box-shadow: none !important;
-    }
-
-    .hero__form-btn {
-      min-height: 52px !important;
-      min-width: 168px !important;
-      background: #f0ece3 !important;
-      color: #1a1a1a !important;
-      font-family: 'Inter', sans-serif !important;
-      font-size: 10px !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.18em !important;
-      text-transform: uppercase !important;
-      padding: 0 20px !important;
-      white-space: nowrap !important;
-      cursor: pointer !important;
-      border: none !important;
-      border-radius: 0 !important;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important;
-      transition: background 0.2s, transform 0.15s !important;
-    }
-    .hero__form-btn:hover {
-      background: #e8e4dc !important;
-      box-shadow: 0 3px 14px rgba(0,0,0,0.22) !important;
-      transform: translateY(-1px) !important;
-    }
-
-    .hero__form-disclaimer {
-      font-size: 10.5px !important;
-      color: rgba(255,255,255,0.25) !important;
-      margin-top: 10px !important;
-      letter-spacing: 0.01em !important;
-    }
-
-    /* ── Secondary CTAs ───────────────────────────────────── */
-    .hero__ctas {
-      display: flex !important;
-      align-items: center !important;
-      gap: 24px !important;
-      flex-wrap: wrap !important;
-      margin-bottom: 0 !important;
-    }
-
-    /* Override btn-ghost so it matches dark hero */
-    .hero .btn-ghost {
-      font-size: 11px !important;
-      font-weight: 600 !important;
-      letter-spacing: 0.12em !important;
-      text-transform: uppercase !important;
-      color: rgba(255,255,255,0.70) !important;
-      background: transparent !important;
-      border: 1.5px solid rgba(255,255,255,0.22) !important;
-      padding: 11px 24px !important;
-      transition: border-color 0.2s, color 0.2s !important;
-    }
-    .hero .btn-ghost:hover {
-      border-color: rgba(180,168,150,0.65) !important;
-      color: #fff !important;
-    }
-
-    .hero .btn-text-link {
-      font-size: 13px !important;
-      color: rgba(255,255,255,0.40) !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 6px !important;
-      transition: color 0.2s !important;
-    }
-    .hero .btn-text-link:hover { color: rgba(255,255,255,0.88) !important; }
-
-    /* ── Right column — video panel ──────────────────────── */
-    .hero__right {
-      position: relative !important;
-      display: block !important;
-      align-self: stretch !important;
-      overflow: hidden !important;
-      min-height: 0 !important;
-    }
-
-    /* Left-edge fade — blends video into dark left column */
-    .hero__right::before {
-      content: '' !important;
-      position: absolute !important;
-      left: 0 !important;
-      top: 0 !important;
-      bottom: 0 !important;
-      width: 88px !important;
-      background: linear-gradient(to right, #05090f 0%, rgba(5,9,15,0.65) 38%, transparent 100%) !important;
-      z-index: 4 !important;
-      pointer-events: none !important;
-    }
-
-    /* Gold corner bracket — top right */
-    .hero__right::after {
-      content: '' !important;
-      position: absolute !important;
-      top: 28px !important;
-      right: 28px !important;
-      width: 44px !important;
-      height: 44px !important;
-      border-top: 1px solid rgba(180,168,150,0.45) !important;
-      border-right: 1px solid rgba(180,168,150,0.45) !important;
-      z-index: 5 !important;
-      pointer-events: none !important;
-    }
-
-    /* Video wrap — fills the right column entirely */
-    .hero__video-wrap {
-      position: absolute !important;
-      inset: 0 !important;
-      overflow: hidden !important;
-    }
-
-    /* Bottom fade — grounds the video panel */
-    .hero__video-wrap::after {
-      content: '' !important;
-      position: absolute !important;
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      height: 30% !important;
-      background: linear-gradient(to top, rgba(5,9,15,0.52) 0%, transparent 100%) !important;
-      z-index: 2 !important;
-      pointer-events: none !important;
-    }
-
-    /* Agent caption — bottom of video panel */
-    .hero__caption {
-      display: flex !important;
-      flex-direction: column !important;
-      position: absolute !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      padding: 24px 30px !important;
-      z-index: 6 !important;
-    }
-    .hero__caption-rule {
-      display: block !important;
-      width: 22px !important;
-      height: 1px !important;
-      background: rgba(180,168,150,0.8) !important;
-      margin-bottom: 10px !important;
-    }
-    .hero__caption-name {
-      font-family: 'Playfair Display', Georgia, serif !important;
-      font-size: 15px !important;
-      font-weight: 500 !important;
-      font-style: italic !important;
-      color: rgba(255,255,255,0.90) !important;
-      line-height: 1.35 !important;
-    }
-    .hero__caption-title {
-      font-size: 9px !important;
-      font-weight: 600 !important;
-      letter-spacing: 0.18em !important;
-      text-transform: uppercase !important;
-      color: rgba(180,168,150,0.70) !important;
-      margin-top: 7px !important;
-    }
-
-
-    /* ── Responsive ───────────────────────────────────────── */
-
-    /* Large desktop — more breathing room */
-    @media (min-width: 1400px) {
-      .hero__left { padding: 80px 64px 80px 96px !important; }
-      .hero__left::before { left: 72px !important; }
-    }
-
-    /* Medium desktop — tighten slightly */
-    @media (max-width: 1200px) {
-      .hero__inner { grid-template-columns: 56fr 44fr !important; }
-      .hero__left { padding: 80px 44px 80px 60px !important; }
-      .hero__left::before { left: 38px !important; }
-      .hero__h1-line,
-      .hero__h1-em { font-size: clamp(44px, 4.8vw, 72px) !important; }
-    }
-
-    /* Tablet — stack: text top, video below */
-    @media (max-width: 900px) {
-      .hero__inner {
-        grid-template-columns: 1fr !important;
-        grid-template-rows: auto auto !important;
-        min-height: 100svh !important;
-      }
-
-      .hero__left {
-        order: 2 !important;
-        padding: 100px 36px 44px !important;
-        justify-content: flex-start !important;
-      }
-      .hero__left::before { display: none !important; }
-
-      .hero__right {
-        order: 1 !important;
-        height: 58vw !important;
-        min-height: 260px !important;
-        max-height: 420px !important;
-      }
-
-      /* No left-edge fade in stacked layout */
-      .hero__right::before { display: none !important; }
-      /* No bracket in stacked layout */
-      .hero__right::after { display: none !important; }
-
-      .hero__caption { display: none !important; }
-
-      .hero__h1-line,
-      .hero__h1-em { font-size: 52px !important; }
-
-      .hero__form { max-width: 100% !important; }
-      .hero__trust { max-width: 100% !important; }
-    }
-
-    /* Mobile */
-    @media (max-width: 600px) {
-      .hero__right {
-        height: 56vw !important;
-        min-height: 210px !important;
-        max-height: 320px !important;
-      }
-
-      .hero__left { padding: 88px 24px 40px !important; }
-
-      .hero__h1-line,
-      .hero__h1-em { font-size: 42px !important; }
-      .hero__sub { font-size: 15px !important; }
-
-      .hero__overline { font-size: 10px !important; gap: 8px !important; }
-
-      .hero__form-row {
-        flex-direction: column !important;
-        min-height: auto !important;
-      }
-      .hero__form-input {
-        border-right: 1px solid rgba(255,255,255,0.14) !important;
-        border-bottom: none !important;
-        min-height: 48px !important;
-      }
-      .hero__form-btn {
-        min-width: 0 !important;
-        width: 100% !important;
-        min-height: 48px !important;
-        padding: 0 16px !important;
-      }
-
-      .hero__trust { max-width: 100% !important; }
-      .hero__trust-item { min-width: 0 !important; }
-
-      .hero__ctas {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 14px !important;
-      }
-      .hero .btn-ghost {
-        width: 100% !important;
-        text-align: center !important;
-      }
-    }
-
-    /* Small mobile */
-    @media (max-width: 380px) {
-      .hero__right { height: 68vw !important; min-height: 200px !important; }
-      .hero__h1-line,
-      .hero__h1-em { font-size: 36px !important; }
-      .hero__left { padding: 84px 16px 36px !important; }
-    }
-
-
-
-    /* Video fallback poster while autoplay initializes */
-    .hero__video-wrap {
-      background-image: url("assets/hero-loop-poster.jpg") !important;
-      background-size: cover !important;
-      background-position: center center !important;
-      background-repeat: no-repeat !important;
-    }
-
-    /* Final override: full-bleed desktop hero video */
-    @media (min-width: 901px) {
-      .hero {
-        min-height: 100svh !important;
-      }
-
-      .hero__inner {
-        grid-template-columns: minmax(480px, 47vw) minmax(0, 1fr) !important;
-        min-height: 100svh !important;
-        position: relative !important;
-      }
-
-      .hero__left {
-        position: relative !important;
-        z-index: 7 !important;
-        background: linear-gradient(90deg, #05090f 0%, rgba(5,9,15,0.97) 72%, rgba(5,9,15,0.72) 100%) !important;
-      }
-
-      .hero__right {
-        position: absolute !important;
-        top: 0 !important;
-        right: -7vw !important;
-        bottom: 0 !important;
-        width: min(68vw, 1120px) !important;
-        height: 100% !important;
-        min-height: 100svh !important;
-        display: block !important;
-        overflow: hidden !important;
-        z-index: 2 !important;
-      }
-
-      .hero__right::before {
-        width: 24vw !important;
-        background: linear-gradient(to right, #05090f 0%, rgba(5,9,15,0.92) 24%, rgba(5,9,15,0.44) 62%, transparent 100%) !important;
-      }
-
-      .hero__right::after {
-        right: calc(7vw + 30px) !important;
-      }
-
-      .hero__video-wrap {
-        position: absolute !important;
-        inset: 0 !important;
-        height: 100% !important;
-        overflow: hidden !important;
-      }
-
-      .hero__video {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        object-position: center center !important;
-      }
-
-      .hero__caption {
-        right: 7vw !important;
-        padding-left: 10vw !important;
-      }
-    }
-
-    @media (min-width: 1500px) {
-      .hero__right {
-        right: -10vw !important;
-        width: min(72vw, 1280px) !important;
-      }
-      .hero__right::after {
-        right: calc(10vw + 36px) !important;
-      }
-      .hero__caption {
-        right: 10vw !important;
-      }
-    }
-
-    /* Final mobile contained video panel */
-    @media (max-width: 900px) {
-      .hero {
-        min-height: auto !important;
-        overflow: hidden !important;
-        background: #05090f !important;
-      }
-
-      .hero__inner {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        grid-template-rows: auto auto !important;
-        min-height: auto !important;
-        padding: 0 !important;
-        overflow: hidden !important;
-      }
-
-      .hero__left {
-        order: 2 !important;
-        min-height: auto !important;
-        padding: 92px 36px 44px !important;
-        justify-content: flex-start !important;
-        background: linear-gradient(180deg, rgba(5,9,15,0.98) 0%, rgba(5,9,15,0.92) 100%) !important;
-      }
-
-      .hero__left::before {
-        display: none !important;
-      }
-
-      .hero__right {
-        order: 1 !important;
-        position: relative !important;
-        inset: auto !important;
-        width: 100% !important;
-        height: 54vw !important;
-        min-height: 260px !important;
-        max-height: 430px !important;
-        display: block !important;
-        overflow: hidden !important;
-        z-index: 2 !important;
-        pointer-events: none !important;
-      }
-
-      .hero__right::before,
-      .hero__right::after,
-      .hero__caption {
-        display: none !important;
-      }
-
-      .hero__video-wrap {
-        position: absolute !important;
-        inset: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        min-height: 0 !important;
-        overflow: hidden !important;
-      }
-
-      .hero__video-wrap::after {
-        display: none !important;
-        content: none !important;
-      }
-
-      .hero__video {
-        position: absolute !important;
-        inset: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        object-position: center center !important;
-        filter: saturate(0.98) brightness(0.96) contrast(1.02) !important;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .hero__left {
-        padding: 86px 24px 38px !important;
-      }
-
-      .hero__right {
-        height: 58vw !important;
-        min-height: 218px !important;
-        max-height: 320px !important;
-      }
-
-      .hero__h1-line,
-      .hero__h1-em {
-        font-size: 42px !important;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .hero__left {
-        padding: 78px 18px 34px !important;
-      }
-
-      .hero__right {
-        height: 62vw !important;
-        min-height: 200px !important;
-      }
-
-      .hero__h1-line,
-      .hero__h1-em {
-        font-size: 36px !important;
-      }
-    }
-
-
-
-    /* Final mobile full-bleed below-copy video fix */
-    @media (max-width: 900px) {
-      .hero,
-      .hero__inner {
-        overflow-x: hidden !important;
-        overflow-y: visible !important;
-      }
-
-      .hero__right {
-        order: 1 !important;
-        position: relative !important;
-        left: 50% !important;
-        right: auto !important;
-        inset: auto auto auto 50% !important;
-        transform: translateX(-50%) !important;
-        width: 100vw !important;
-        max-width: 100vw !important;
-        min-width: 100vw !important;
-        height: 58vw !important;
-        min-height: 260px !important;
-        max-height: 440px !important;
-        margin: 0 !important;
-        display: block !important;
-        overflow: hidden !important;
-        z-index: 2 !important;
-      }
-
-      .hero__video-wrap {
-        position: absolute !important;
-        inset: 0 !important;
-        width: 100vw !important;
-        max-width: none !important;
-        height: 100% !important;
-        min-height: 0 !important;
-      }
-
-      .hero__video {
-        width: 100vw !important;
-        max-width: none !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        object-position: center center !important;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .hero__right {
-        height: 64vw !important;
-        min-height: 236px !important;
-        max-height: 340px !important;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .hero__right {
-        height: 66vw !important;
-        min-height: 218px !important;
-      }
-    }
-
-
-
-    /* Hide duplicate proof stats on mobile */
-    @media (max-width: 768px) {
-      .proof-bar {
-        display: none !important;
-      }
-    }
-
-
-    /* Emotion-led hero copy refinement */
-    .hero__left {
-      gap: 0 !important;
-    }
-
-    .hero__h1-location {
-      max-width: 560px !important;
-      margin-bottom: 18px !important;
-      color: rgba(180,168,150,0.82) !important;
-      font-size: 9.5px !important;
-      letter-spacing: 0.2em !important;
-      line-height: 1.55 !important;
-    }
-
-    .hero__local-detail {
-      position: absolute !important;
-      left: 80px !important;
-      bottom: 34px !important;
-      display: block !important;
-      width: min(100%, 420px) !important;
-      min-height: 18px !important;
-      margin: 0 !important;
-      color: rgba(255,255,255,0.58) !important;
-      font-size: 12px !important;
-      font-weight: 400 !important;
-      letter-spacing: 0.055em !important;
-      line-height: 1.5 !important;
-      overflow: hidden !important;
-    }
-
-    .hero__local-detail::before {
-      content: '' !important;
-      display: inline-block !important;
-      width: 26px !important;
-      height: 1px !important;
-      margin: 0 10px 4px 0 !important;
-      background: rgba(180,168,150,0.58) !important;
-    }
-
-    .hero__local-detail span {
-      position: absolute !important;
-      left: 36px !important;
-      top: 0 !important;
-      opacity: 0 !important;
-      transform: translateY(6px) !important;
-      animation: heroLocalDetail 24s ease-in-out infinite !important;
-      white-space: nowrap !important;
-    }
-
-    .hero__local-detail span:nth-child(1) { animation-delay: 0s !important; }
-    .hero__local-detail span:nth-child(2) { animation-delay: 4s !important; }
-    .hero__local-detail span:nth-child(3) { animation-delay: 8s !important; }
-    .hero__local-detail span:nth-child(4) { animation-delay: 12s !important; }
-    .hero__local-detail span:nth-child(5) { animation-delay: 16s !important; }
-    .hero__local-detail span:nth-child(6) { animation-delay: 20s !important; }
-
-    @keyframes heroLocalDetail {
-      0%, 12% {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      17%, 30% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      35%, 100% {
-        opacity: 0;
-        transform: translateY(-6px);
-      }
-    }
-
-    .hero__h1 {
-      margin-bottom: 20px !important;
-      max-width: 560px !important;
-    }
-
-    .hero__h1-line,
-    .hero__h1-em {
-      font-size: 56px !important;
-      letter-spacing: 0 !important;
-      line-height: 0.98 !important;
-      text-wrap: balance !important;
-    }
-
-    .hero__h1-em {
-      color: rgba(255,255,255,0.88) !important;
-    }
-
-    .hero__sub {
-      max-width: 510px !important;
-      margin-bottom: 14px !important;
-      color: rgba(255,255,255,0.72) !important;
-      font-size: 15.5px !important;
-      line-height: 1.62 !important;
-    }
-
-    .hero__context {
-      max-width: 520px !important;
-      margin: 0 0 22px !important;
-      color: rgba(255,255,255,0.52) !important;
-      font-size: 12.75px !important;
-      font-weight: 300 !important;
-      line-height: 1.7 !important;
-      text-shadow: 0 1px 16px rgba(0,0,0,0.65) !important;
-    }
-
-    .hero__trust {
-      max-width: 540px !important;
-      margin-bottom: 22px !important;
-      padding: 13px 0 !important;
-    }
-
-    .hero__trust-value {
-      font-size: 25px !important;
-      letter-spacing: 0 !important;
-    }
-
-    .hero__trust-label {
-      max-width: 116px !important;
-      color: rgba(180,168,150,0.78) !important;
-      letter-spacing: 0.105em !important;
-      line-height: 1.35 !important;
-    }
-
-    .hero__ctas {
-      gap: 18px !important;
-      margin-bottom: 12px !important;
-    }
-
-    .hero .btn-ghost.hero__primary-cta {
-      min-height: 46px !important;
-      padding: 0 28px !important;
-      background: #f0ece3 !important;
-      border-color: rgba(180,168,150,0.78) !important;
-      color: #1a1a1a !important;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important;
-    }
-
-    .hero .btn-ghost.hero__primary-cta:hover {
-      color: #08111f !important;
-      border-color: rgba(228,201,127,0.95) !important;
-      transform: translateY(-1px) !important;
-    }
-
-    .hero .btn-text-link {
-      color: rgba(255,255,255,0.58) !important;
-    }
-
-    .hero__reassurance {
-      margin: 0 !important;
-      color: rgba(255,255,255,0.38) !important;
-      font-size: 12px !important;
-      line-height: 1.5 !important;
-      letter-spacing: 0.025em !important;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .hero__local-detail span {
-        animation: none !important;
-        opacity: 0 !important;
-        transform: none !important;
-      }
-
-      .hero__local-detail span:first-child {
-        opacity: 1 !important;
-      }
-    }
-
-    @media (max-width: 1200px) {
-      .hero__h1-line,
-      .hero__h1-em {
-        font-size: 50px !important;
-      }
-    }
-
-    @media (max-width: 900px) {
-      .hero__h1-location {
-        max-width: 100% !important;
-        font-size: 10px !important;
-      }
-
-      .hero__local-detail {
-        position: relative !important;
-        left: auto !important;
-        bottom: auto !important;
-        width: 100% !important;
-        margin-bottom: 18px !important;
-      }
-
-      .hero__h1 {
-        max-width: 680px !important;
-      }
-
-      .hero__h1-line,
-      .hero__h1-em {
-        font-size: 46px !important;
-        line-height: 1 !important;
-      }
-
-      .hero__sub,
-      .hero__context {
-        max-width: 640px !important;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .hero__h1-location {
-        font-size: 9px !important;
-        letter-spacing: 0.18em !important;
-      }
-
-      .hero__local-detail {
-        min-height: 34px !important;
-        font-size: 11px !important;
-        letter-spacing: 0.035em !important;
-      }
-
-      .hero__local-detail span {
-        white-space: normal !important;
-        right: 0 !important;
-      }
-
-      .hero__h1 {
-        margin-bottom: 20px !important;
-      }
-
-      .hero__h1-line,
-      .hero__h1-em {
-        font-size: 37px !important;
-      }
-
-      .hero__sub {
-        font-size: 16px !important;
-        line-height: 1.62 !important;
-      }
-
-      .hero__context {
-        font-size: 13.5px !important;
-        line-height: 1.68 !important;
-        margin-bottom: 24px !important;
-      }
-
-      .hero__trust {
-        justify-content: space-between !important;
-      }
-
-      .hero__trust-item {
-        flex: 1 1 0 !important;
-        padding-right: 12px !important;
-      }
-
-      .hero__trust-item:not(:first-child) {
-        padding-left: 12px !important;
-      }
-
-      .hero__trust-value {
-        font-size: 25px !important;
-      }
-
-      .hero__trust-label {
-        max-width: 92px !important;
-        font-size: 8.5px !important;
-        letter-spacing: 0.08em !important;
-      }
-
-      .hero .btn-ghost.hero__primary-cta,
-      .hero .btn-text-link {
-        width: 100% !important;
-        min-height: 48px !important;
-        justify-content: center !important;
-      }
-
-      .hero__reassurance {
-        width: 100% !important;
-        text-align: center !important;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .hero__h1-line,
-      .hero__h1-em {
-        font-size: 34px !important;
-      }
-
-      .hero__context {
-        font-size: 13px !important;
-      }
-    }
-
-
-    /* Header logo + phone-first CTA refinement */
-    .nav--inverse {
-      background: rgba(255,255,255,0.98) !important;
-      border-bottom: 1px solid rgba(13,23,39,0.08) !important;
-      box-shadow: 0 10px 30px rgba(13,23,39,0.08) !important;
-    }
-
-    .nav--inverse .nav__link {
-      color: rgba(13,23,39,0.72) !important;
-    }
-
-    .nav--inverse .nav__link:hover {
-      color: #0d1727 !important;
-    }
-
-    .nav--inverse .nav__toggle span {
-      background: #0d1727 !important;
-    }
-
-    .nav__logo {
-      align-items: center !important;
-      min-width: 220px !important;
-      min-height: 48px !important;
-      padding: 0 !important;
-      background: transparent !important;
-      border: 0 !important;
-      box-shadow: none !important;
-    }
-
-    .nav__logo-img {
-      display: block !important;
-      width: auto !important;
-      height: 48px !important;
-      max-width: 260px !important;
-      object-fit: contain !important;
-    }
-
-    .nav__cta--phone {
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 10px !important;
-      min-height: 44px !important;
-      padding: 0 24px !important;
-      white-space: nowrap !important;
-      border: 1px solid rgba(255,255,255,0.16) !important;
-      background: #f0ece3 !important;
-      color: #1a1a1a !important;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.18) !important;
-    }
-
-    .nav__cta--phone::before {
-      content: "Call";
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      opacity: 0.72;
-    }
-
-    @media (max-width: 960px) {
-      .nav__logo {
-        min-width: 0 !important;
-        min-height: 42px !important;
-        padding: 6px 9px !important;
-      }
-
-      .nav__logo-img {
-        height: 42px !important;
-        max-width: 210px !important;
-      }
-
-      .nav__cta--phone {
-        display: inline-flex !important;
-        min-height: 38px !important;
-        margin-left: auto !important;
-        margin-right: 16px !important;
-        padding: 0 14px !important;
-        font-size: 10px !important;
-        letter-spacing: 0.12em !important;
-      }
-
-      .nav__cta--phone::before {
-        display: none;
-      }
-
-      .nav__toggle {
-        margin-left: 0 !important;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .nav__logo-img {
-        height: 36px !important;
-        max-width: 150px !important;
-      }
-
-      .nav__cta--phone {
-        min-height: 34px !important;
-        margin-right: 10px !important;
-        padding: 0 10px !important;
-        font-size: 9px !important;
-        letter-spacing: 0.08em !important;
-      }
-    }
-
-    @media (max-width: 374px) {
-      .nav__cta--phone {
-        padding: 0 8px !important;
-        font-size: 8.5px !important;
-      }
-
-      .nav__logo-img {
-        max-width: 132px !important;
-      }
-    }
-
-    /* 2026-style fixed header: quiet, compressed, and conversion-forward */
-    body {
-      padding-top: 74px !important;
-    }
-
-    .nav {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      width: 100% !important;
-      z-index: 99999 !important;
-      transform: translateZ(0) !important;
-      transition:
-        height 0.24s ease,
-        padding 0.24s ease,
-        background 0.24s ease,
-        box-shadow 0.24s ease,
-        border-color 0.24s ease !important;
-      backdrop-filter: saturate(145%) blur(18px) !important;
-      -webkit-backdrop-filter: saturate(145%) blur(18px) !important;
-    }
-
-    .nav__logo,
-    .nav__logo-img,
-    .nav__cta--phone,
-    .nav__link,
-    .nav__toggle {
-      transition:
-        height 0.24s ease,
-        min-height 0.24s ease,
-        max-width 0.24s ease,
-        padding 0.24s ease,
-        margin 0.24s ease,
-        color 0.24s ease,
-        box-shadow 0.24s ease,
-        transform 0.24s ease !important;
-    }
-
-    .nav.nav--scrolled {
-      height: 58px !important;
-      padding: 0 46px !important;
-      background: rgba(255,255,255,0.92) !important;
-      border-bottom-color: rgba(13,23,39,0.12) !important;
-      box-shadow: 0 14px 38px rgba(13,23,39,0.12) !important;
-    }
-
-    .nav.nav--scrolled .nav__logo {
-      min-height: 38px !important;
-    }
-
-    .nav.nav--scrolled .nav__logo-img {
-      height: 38px !important;
-      max-width: 220px !important;
-    }
-
-    .nav.nav--scrolled .nav__link {
-      color: rgba(13,23,39,0.66) !important;
-      transform: translateY(-1px) !important;
-    }
-
-    .nav.nav--scrolled .nav__cta--phone {
-      min-height: 38px !important;
-      padding: 0 20px !important;
-      box-shadow: 0 8px 22px rgba(159,123,40,0.2) !important;
-      transform: translateY(-1px) !important;
-    }
-
-    @media (max-width: 960px) {
-      body {
-        padding-top: 68px !important;
-      }
-
-      .nav.nav--scrolled {
-        height: 58px !important;
-        padding: 0 20px !important;
-      }
-
-      .nav.nav--scrolled .nav__logo-img {
-        height: 34px !important;
-        max-width: 175px !important;
-      }
-
-      .nav.nav--scrolled .nav__cta--phone {
-        min-height: 34px !important;
-        padding: 0 12px !important;
-      }
-
-      .nav.nav--scrolled .nav__toggle {
-        width: 34px !important;
-        height: 34px !important;
-      }
-    }
-
-    @media (max-width: 600px) {
-      body {
-        padding-top: 64px !important;
-      }
-
-      .nav.nav--scrolled {
-        height: 56px !important;
-        padding: 0 14px !important;
-      }
-
-      .nav.nav--scrolled .nav__logo-img {
-        height: 30px !important;
-        max-width: 132px !important;
-      }
-
-      .nav.nav--scrolled .nav__cta--phone {
-        min-height: 32px !important;
-        margin-right: 8px !important;
-        padding: 0 9px !important;
-      }
-    }
-
-    /* Integrated hero header refinement */
-    body {
-      padding-top: 0 !important;
-    }
-
-    .nav,
-    .nav--inverse,
-    .nav.nav--scrolled {
-      background:
-        linear-gradient(180deg, rgba(5,9,15,0.68) 0%, rgba(5,9,15,0.42) 72%, rgba(5,9,15,0.18) 100%) !important;
-      border-bottom: 1px solid rgba(255,255,255,0.07) !important;
-      box-shadow: inset 0 -1px 0 rgba(180,168,150,0.05) !important;
-      backdrop-filter: saturate(132%) blur(20px) !important;
-      -webkit-backdrop-filter: saturate(132%) blur(20px) !important;
-    }
-
-    .nav {
-      display: grid !important;
-      grid-template-columns: minmax(230px, auto) 1fr auto auto !important;
-      align-items: center !important;
-      column-gap: 42px !important;
-      height: 76px !important;
-      padding: 0 56px !important;
-    }
-
-    .nav.nav--scrolled {
-      height: 64px !important;
-      padding: 0 48px !important;
-      background:
-        linear-gradient(180deg, rgba(5,9,15,0.76) 0%, rgba(5,9,15,0.52) 100%) !important;
-      border-bottom-color: rgba(255,255,255,0.085) !important;
-    }
-
-    .nav__logo {
-      min-width: 0 !important;
-      min-height: 0 !important;
-      padding: 0 !important;
-      background: transparent !important;
-      border: 0 !important;
-      box-shadow: none !important;
-      justify-self: start !important;
-    }
-
-    .nav__logo-img {
-      height: 58px !important;
-      max-width: 286px !important;
-      filter: none !important;
-      opacity: 0.94 !important;
-    }
-
-    .nav.nav--scrolled .nav__logo-img {
-      height: 50px !important;
-      max-width: 248px !important;
-    }
-
-    .nav__links {
-      justify-self: center !important;
-      gap: 40px !important;
-    }
-
-    .nav--inverse .nav__link,
-    .nav.nav--scrolled .nav__link {
-      color: rgba(255,255,255,0.7) !important;
-      font-size: 10.5px !important;
-      font-weight: 500 !important;
-      letter-spacing: 0.18em !important;
-      border-bottom-color: transparent !important;
-      padding: 9px 0 !important;
-      transform: none !important;
-    }
-
-    .nav--inverse .nav__link:hover,
-    .nav--inverse .nav__link.is-active,
-    .nav.nav--scrolled .nav__link:hover,
-    .nav.nav--scrolled .nav__link.is-active {
-      color: rgba(255,255,255,0.96) !important;
-      border-bottom-color: rgba(180,168,150,0.72) !important;
-    }
-
-    .nav__cta--phone,
-    .nav.nav--scrolled .nav__cta--phone {
-      justify-self: end !important;
-      min-height: 42px !important;
-      padding: 0 21px !important;
-      border: 1px solid rgba(238,216,143,0.46) !important;
-      background: #f0ece3 !important;
-      color: #1a1a1a !important;
-      font-size: 10.5px !important;
-      font-weight: 800 !important;
-      line-height: 1 !important;
-      letter-spacing: 0.12em !important;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.18) !important;
-      transform: none !important;
-    }
-
-    .nav__cta--phone:hover,
-    .nav.nav--scrolled .nav__cta--phone:hover {
-      background: #e8e4dc !important;
-      box-shadow: 0 3px 14px rgba(0,0,0,0.22) !important;
-      transform: translateY(-1px) !important;
-    }
-
-    .nav__cta--phone::before {
-      color: rgba(9,16,27,0.72) !important;
-      letter-spacing: 0.2em !important;
-    }
-
-    .nav__toggle span,
-    .nav--inverse .nav__toggle span {
-      background: rgba(255,255,255,0.88) !important;
-    }
-
-    .nav__mobile-menu {
-      top: 76px !important;
-      background: linear-gradient(180deg, rgba(5,9,15,0.96) 0%, rgba(10,16,26,0.91) 100%) !important;
-      border-top: 1px solid rgba(255,255,255,0.08) !important;
-      box-shadow: 0 22px 42px rgba(0,0,0,0.26) !important;
-      backdrop-filter: saturate(135%) blur(18px) !important;
-      -webkit-backdrop-filter: saturate(135%) blur(18px) !important;
-    }
-
-    .nav__mobile-menu a,
-    .nav__mobile-menu button {
-      color: rgba(255,255,255,0.76) !important;
-      letter-spacing: 0.12em !important;
-    }
-
-    .nav__mobile-menu a:hover,
-    .nav__mobile-menu button:hover {
-      color: rgba(255,255,255,0.98) !important;
-    }
-
-    @media (max-width: 960px) {
-      body {
-        padding-top: 0 !important;
-      }
-
-      .nav,
-      .nav.nav--scrolled {
-        grid-template-columns: minmax(0, 1fr) auto auto !important;
-        column-gap: 16px !important;
-        height: 68px !important;
-        padding: 0 24px !important;
-      }
-
-      .nav__links {
-        display: none !important;
-      }
-
-      .nav__logo-img,
-      .nav.nav--scrolled .nav__logo-img {
-        height: 44px !important;
-        max-width: 216px !important;
-      }
-
-      .nav__cta--phone,
-      .nav.nav--scrolled .nav__cta--phone {
-        min-height: 40px !important;
-        padding: 0 16px !important;
-        font-size: 10px !important;
-        letter-spacing: 0.105em !important;
-      }
-
-      .nav .nav__toggle,
-      .nav__toggle,
-      .nav.nav--scrolled .nav__toggle {
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: center !important;
-        gap: 5px !important;
-        position: static !important;
-        width: 34px !important;
-        height: 40px !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        transform: none !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-      }
-
-      .nav .nav__toggle::before,
-      .nav__toggle::before {
-        content: none !important;
-        display: none !important;
-      }
-
-      .nav .nav__toggle span,
-      .nav__toggle span {
-        display: block !important;
-        width: 26px !important;
-        height: 1.5px !important;
-        margin: 0 !important;
-        opacity: 1 !important;
-        background: rgba(255,255,255,0.88) !important;
-        transform: none !important;
-      }
-
-      .nav__mobile-menu {
-        top: 68px !important;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .nav,
-      .nav.nav--scrolled {
-        column-gap: 12px !important;
-        height: 64px !important;
-        padding: 0 16px !important;
-      }
-
-      .nav__logo-img,
-      .nav.nav--scrolled .nav__logo-img {
-        height: 36px !important;
-        max-width: 174px !important;
-      }
-
-      .nav > .nav__cta--phone,
-      .nav.nav--scrolled > .nav__cta--phone {
-        min-height: 38px !important;
-        padding: 0 15px !important;
-        font-size: 0 !important;
-      }
-
-      .nav > .nav__cta--phone::before {
-        display: inline !important;
-        font-size: 9.5px !important;
-      }
-
-      .nav .nav__toggle,
-      .nav__toggle,
-      .nav.nav--scrolled .nav__toggle {
-        width: 30px !important;
-        height: 38px !important;
-      }
-
-      .nav__mobile-menu {
-        top: 64px !important;
-      }
-    }
-
-    @media (max-width: 374px) {
-      .nav,
-      .nav.nav--scrolled {
-        column-gap: 9px !important;
-        padding: 0 13px !important;
-      }
-
-      .nav__logo-img,
-      .nav.nav--scrolled .nav__logo-img {
-        height: 32px !important;
-        max-width: 148px !important;
-      }
-
-      .nav > .nav__cta--phone,
-      .nav.nav--scrolled > .nav__cta--phone {
-        padding: 0 12px !important;
-      }
-    }
-
-    /* ── Meet the Team ─────────────────────────────────────── */
-    .meet-team {
-      background: #05090f;
-      overflow: hidden;
-    }
-    .meet-team__inner {
-      display: grid;
-      grid-template-columns: 58fr 42fr;
-      min-height: 520px;
-    }
-    .meet-team__photo {
-      position: relative;
-      overflow: hidden;
-    }
-    .meet-team__photo img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-    }
-    /* Right-edge fade blends photo into text panel */
-    .meet-team__photo::after {
-      content: '';
-      position: absolute;
-      top: 0; right: 0; bottom: 0;
-      width: 120px;
-      background: linear-gradient(to right, transparent 0%, #05090f 100%);
-      pointer-events: none;
-    }
-    .meet-team__content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 72px 80px 72px 48px;
-    }
-    .meet-team__eyebrow {
-      display: block;
-      font-family: 'Inter', sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.20em;
-      text-transform: uppercase;
-      color: rgba(180,168,150,0.80);
-      margin-bottom: 20px;
-    }
-    .meet-team__heading {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(28px, 3vw, 42px);
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #f0ece3;
-      line-height: 1.15;
-      margin: 0 0 28px;
-    }
-    .meet-team__body {
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
-      font-weight: 300;
-      line-height: 1.78;
-      color: rgba(240,236,227,0.72);
-      max-width: 480px;
-      margin: 0 0 44px;
-    }
-    .meet-team__cta {
-      display: inline-block;
-      font-family: 'Inter', sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(180,168,150,0.90);
-      border: 1px solid rgba(180,168,150,0.45);
-      padding: 14px 32px;
-      text-decoration: none;
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
-      align-self: flex-start;
-    }
-    .meet-team__cta:hover {
-      color: #0d1727;
-      background: rgba(180,168,150,0.90);
-      border-color: rgba(180,168,150,0.90);
-    }
-
-    @media (max-width: 900px) {
-      .meet-team__inner {
-        grid-template-columns: 1fr;
-        min-height: auto;
-      }
-      .meet-team__photo {
-        height: 62vw;
-        min-height: 260px;
-        max-height: 420px;
-      }
-      .meet-team__photo::after { display: none; }
-      /* Bottom fade for stacked layout */
-      .meet-team__photo::before {
-        content: '';
-        position: absolute;
-        left: 0; right: 0; bottom: 0;
-        height: 80px;
-        background: linear-gradient(to top, #05090f 0%, transparent 100%);
-        pointer-events: none;
-        z-index: 1;
-      }
-      .meet-team__content {
-        padding: 44px 36px 56px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .meet-team__photo {
-        height: 68vw;
-        min-height: 220px;
-        max-height: 320px;
-      }
-      .meet-team__content { padding: 36px 24px 48px; }
-      .meet-team__body { font-size: 14px; }
-    }
-    /* Lifestyle hero media: uses the existing right-side hero media panel */
-    .hero__media-slide {
-      position: absolute !important;
-      inset: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: cover !important;
-      object-position: var(--hero-media-position, center center) !important;
-      opacity: 0 !important;
-      filter: saturate(0.92) brightness(0.86) !important;
-      transform: scale(1.06) translate3d(0, 0, 0) !important;
-      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-      z-index: 1 !important;
-      pointer-events: none !important;
-    }
-
-    .hero__media-slide.is-active {
-      opacity: 1 !important;
-      animation: heroKenBurns 22s ease-in-out infinite alternate !important;
-    }
-
-    .hero__media-slide--video {
-      transform: scale(1.02) translate3d(0, 0, 0) !important;
-    }
-
-    .hero__media-slide--video.is-active {
-      animation: none !important;
-    }
-
-    .hero__caption {
-      display: none !important;
-    }
-
-    @keyframes heroKenBurns {
-      from { transform: scale(1.06) translate3d(-1.4%, 0, 0); }
-      to { transform: scale(1.13) translate3d(1.8%, -0.8%, 0); }
-    }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero__media-slide.is-active {
-      animation: none !important;
-      transform: scale(1.04) !important;
-    }
-  }
-
-  /* Meet Geoff & Katrinna: premium editorial split */
-  .meet-editorial {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1.45fr) minmax(390px, 0.95fr) !important;
-    align-items: stretch !important;
-    gap: 0 !important;
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    background: #fff !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    overflow: hidden !important;
-  }
-
-  .meet-editorial + .proof-bar,
-  .meet-team + .proof-bar {
-    border-top: 0 !important;
-  }
-
-  .meet-editorial__media {
-    position: relative !important;
-    min-height: clamp(520px, 55vw, 740px) !important;
-    background: #050506 !important;
-    box-shadow: inset -1px 0 0 rgba(202, 164, 83, 0.42) !important;
-    overflow: hidden !important;
-  }
-
-  .meet-editorial__media::before {
-    display: none !important;
-  }
-
-  .meet-editorial__media::after {
-    display: none !important;
-  }
-
-  .meet-editorial__image {
-    position: relative !important;
-    z-index: 1 !important;
-    display: block !important;
-    width: 100% !important;
-    height: 100% !important;
-    min-height: inherit !important;
-    opacity: 1 !important;
-    background: #f2eee7 !important;
-    object-fit: cover !important;
-    object-position: center center !important;
-    filter: none !important;
-  }
-
-  .meet-editorial__media .meet-editorial__image {
-    display: block !important;
-  }
-
-  .meet-editorial__duo {
-    position: absolute !important;
-    inset: 0 !important;
-    z-index: 2 !important;
-    overflow: hidden !important;
-    display: none !important;
-  }
-
-  .meet-editorial__duo::before {
-    display: none !important;
-  }
-
-  .meet-editorial__person {
-    position: absolute !important;
-    bottom: -1.5% !important;
-    width: auto !important;
-    object-fit: contain !important;
-    object-position: bottom center !important;
-    opacity: 1 !important;
-    filter: saturate(0.94) contrast(1.04) drop-shadow(0 38px 42px rgba(0, 0, 0, 0.42)) !important;
-  }
-
-  .meet-editorial__person--geoff {
-    left: 8% !important;
-    height: 96% !important;
-    z-index: 1 !important;
-  }
-
-  .meet-editorial__person--katrinna {
-    left: 31% !important;
-    height: 93% !important;
-    z-index: 2 !important;
-  }
-
-  .meet-editorial__content {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: flex-start !important;
-    background: #fff !important;
-    color: #0b1626 !important;
-    padding: clamp(46px, 5.8vw, 96px) clamp(34px, 5vw, 86px) !important;
-  }
-
-  .meet-editorial .meet-team__photo::after {
-    display: none !important;
-  }
-
-  .meet-editorial .meet-team__content,
-  .meet-editorial__content.meet-team__content {
-    background: #fff !important;
-    color: #0b1626 !important;
-  }
-
-  .meet-editorial__content > * {
-    color: inherit !important;
-    opacity: 1 !important;
-  }
-
-  .meet-editorial :is(.section-eyebrow, .eyebrow, p:first-child) {
-    margin: 0 0 18px !important;
-    color: rgba(11, 22, 38, 0.56) !important;
-    opacity: 1 !important;
-    font-size: 0.75rem !important;
-    letter-spacing: 0.22em !important;
-    line-height: 1.3 !important;
-  }
-
-  .meet-editorial h2 {
-    max-width: 700px !important;
-    margin: 0 0 clamp(22px, 3vw, 34px) !important;
-    color: #080f1c !important;
-    opacity: 1 !important;
-    font-family: var(--font-serif) !important;
-    font-size: clamp(2.55rem, 3.65vw, 4.65rem) !important;
-    font-weight: 600 !important;
-    line-height: 1.02 !important;
-    letter-spacing: -0.01em !important;
-    text-transform: none !important;
-  }
-
-  .meet-editorial h2 .meet-heading-line {
-    display: inline-block !important;
-    white-space: nowrap !important;
-  }
-
-  .meet-editorial .meet-team__heading,
-  .meet-editorial__content .meet-team__heading {
-    color: #080f1c !important;
-    letter-spacing: -0.01em !important;
-    text-transform: none !important;
-  }
-
-  .meet-editorial h2 em {
-    display: inline-block !important;
-    color: rgba(8, 15, 28, 0.72) !important;
-    font-style: italic !important;
-    font-weight: 400 !important;
-  }
-
-  .meet-editorial p {
-    max-width: 670px !important;
-    margin: 0 !important;
-    color: rgba(11, 22, 38, 0.78) !important;
-    opacity: 1 !important;
-    font-size: clamp(1rem, 1.05vw, 1.12rem) !important;
-    line-height: 1.82 !important;
-  }
-
-  .meet-editorial a {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 46px !important;
-    margin-top: clamp(34px, 5vw, 86px) !important;
-    padding: 0.85rem 1.7rem !important;
-    border: 1px solid rgba(11, 22, 38, 0.86) !important;
-    background: transparent !important;
-    color: #0b1626 !important;
-    box-shadow: none !important;
-    font-size: 0.78rem !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.12em !important;
-    text-transform: uppercase !important;
-  }
-
-  .meet-editorial a:hover {
-    background: #0b1626 !important;
-    color: #fff !important;
-    transform: translateY(-1px) !important;
-  }
-
-  @media (max-width: 900px) {
-    .meet-editorial {
-      grid-template-columns: 1fr !important;
-      width: 100% !important;
-      margin: 0 auto !important;
-      border-left: 0 !important;
-      border-right: 0 !important;
-      box-shadow: none !important;
-    }
-
-    .meet-editorial__media {
-      min-height: clamp(390px, 68vw, 560px) !important;
-    }
-
-    .meet-editorial__person--geoff {
-      left: 12% !important;
-      height: 92% !important;
-    }
-
-    .meet-editorial__person--katrinna {
-      left: 38% !important;
-      height: 89% !important;
-    }
-
-    .meet-editorial__content {
-      padding: clamp(38px, 9vw, 62px) clamp(22px, 6vw, 42px) !important;
-    }
-  }
-
-  @media (max-width: 560px) {
-    .hero__video-wrap::after {
-      display: none !important;
-      content: none !important;
-    }
-
-    .hero__media-slide,
-    .hero__media-slide.is-active {
-      filter: saturate(1) brightness(1) contrast(1) !important;
-    }
-
-    .meet-editorial__media {
-      min-height: 360px !important;
-    }
-
-    .meet-editorial__person--geoff {
-      left: 4% !important;
-      height: 88% !important;
-    }
-
-    .meet-editorial__person--katrinna {
-      left: 34% !important;
-      height: 86% !important;
-    }
-
-    .meet-editorial__image {
-      object-position: 68% center !important;
-    }
-
-    .meet-editorial h2 {
-      font-size: clamp(2.45rem, 11vw, 3.35rem) !important;
-      letter-spacing: -0.01em !important;
-    }
-
-    .meet-editorial h2 .meet-heading-line {
-      white-space: normal !important;
-    }
-
-    .meet-editorial a {
-      width: 100% !important;
-    }
-  }
-
-  .meet-team .meet-team__inner.meet-editorial > .meet-team__content.meet-editorial__content {
-    background: #fff !important;
-    color: #0b1626 !important;
-  }
-
-  .meet-team .meet-team__inner.meet-editorial .meet-team__heading,
-  .meet-team .meet-team__inner.meet-editorial .meet-team__heading em {
-    color: #080f1c !important;
-    letter-spacing: -0.01em !important;
-    text-transform: none !important;
-  }
-
-  .meet-team .meet-team__inner.meet-editorial .meet-team__heading em {
-    color: rgba(8, 15, 28, 0.72) !important;
-    font-style: italic !important;
-    font-weight: 400 !important;
-  }
-
-  /* Featured listings: dark editorial property showcase */
-  .featured-listings {
-    position: relative !important;
-    overflow: hidden !important;
-    padding: clamp(86px, 9vw, 140px) clamp(22px, 5vw, 72px) !important;
-    background:
-      radial-gradient(circle at 84% 8%, rgba(180,168,150,0.13), transparent 30%),
-      linear-gradient(135deg, #020408 0%, #080d16 48%, #020306 100%) !important;
-    color: #fff !important;
-  }
-
-  .featured-listings::before {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background:
-      linear-gradient(115deg, transparent 0 49%, rgba(180,168,150,0.055) 49.1%, transparent 49.45%),
-      repeating-linear-gradient(90deg, rgba(255,255,255,0.018) 0 1px, transparent 1px 96px) !important;
-    opacity: 0.62 !important;
-    pointer-events: none !important;
-  }
-
-  .featured-listings > * {
-    position: relative !important;
-    z-index: 1 !important;
-  }
-
-  .featured-listings__header {
-    display: flex !important;
-    align-items: end !important;
-    justify-content: space-between !important;
-    gap: 28px !important;
-    max-width: 1420px !important;
-    margin: 0 auto clamp(36px, 5vw, 64px) !important;
-  }
-
-  .featured-listings .section-eyebrow {
-    color: #706860 !important;
-  }
-
-  .featured-listings .section-heading {
-    max-width: 9ch !important;
-    color: rgba(255,255,255,0.94) !important;
-    font-family: var(--font-serif) !important;
-    font-size: clamp(3.4rem, 7vw, 7.8rem) !important;
-    font-weight: 600 !important;
-    line-height: 0.92 !important;
-    letter-spacing: -0.025em !important;
-  }
-
-  .featured-listings .listings-grid {
-    max-width: 1420px !important;
-    margin: 0 auto clamp(38px, 4vw, 56px) !important;
-    display: grid !important;
-    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.82fr) !important;
-    grid-auto-rows: minmax(285px, auto) !important;
-    gap: clamp(18px, 2vw, 28px) !important;
-  }
-
-  .featured-listings .listing-card {
-    position: relative !important;
-    min-height: 100% !important;
-    display: grid !important;
-    grid-template-rows: minmax(260px, 1fr) auto !important;
-    background: rgba(255,255,255,0.045) !important;
-    border: 1px solid rgba(255,255,255,0.12) !important;
-    box-shadow: 0 28px 80px rgba(0,0,0,0.34) !important;
-    isolation: isolate !important;
-    transform: translateZ(0) !important;
-    transition: transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 450ms, box-shadow 450ms !important;
-  }
-
-  .featured-listings .listing-card--feature {
-    grid-row: span 2 !important;
-    grid-template-rows: minmax(560px, 1fr) auto !important;
-  }
-
-  .featured-listings .listing-card:hover {
-    transform: translateY(-6px) !important;
-    border-color: rgba(180,168,150,0.38) !important;
-    box-shadow: 0 38px 100px rgba(0,0,0,0.48), 0 0 42px rgba(180,168,150,0.08) !important;
-  }
-
-  .featured-listings .listing-card__img {
-    height: auto !important;
-    min-height: 260px !important;
-    overflow: hidden !important;
-    background: #111821 !important;
-  }
-
-  .featured-listings .listing-card__img::before {
-    content: '' !important;
-    position: absolute !important;
-    inset: -2px !important;
-    background:
-      linear-gradient(180deg, rgba(5,9,15,0.02), rgba(5,9,15,0.54)),
-      url("assets/listings/55-chelsey-street/hero.webp") center/cover no-repeat !important;
-    transform: scale(1.02) !important;
-    transition: transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 900ms !important;
-    z-index: 0 !important;
-  }
-
-  .featured-listings .listing-card:nth-child(2) .listing-card__img::before {
-    background:
-      linear-gradient(180deg, rgba(5,9,15,0.02), rgba(5,9,15,0.54)),
-      url("assets/GettyImages-2231150857.jpg") center/cover no-repeat !important;
-  }
-
-  .featured-listings .listing-card:nth-child(3) .listing-card__img::before {
-    background:
-      linear-gradient(180deg, rgba(5,9,15,0.02), rgba(5,9,15,0.54)),
-      url("assets/GettyImages-1388101414.jpg") center/cover no-repeat !important;
-  }
-
-  .featured-listings .listing-card__img::after {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background: linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.16) 48%, transparent 72%) !important;
-    opacity: 0 !important;
-    transform: translateX(-38%) !important;
-    transition: opacity 450ms, transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1) !important;
-    z-index: 1 !important;
-  }
-
-  .featured-listings .listing-card:hover .listing-card__img::before {
-    transform: scale(1.075) !important;
-    filter: saturate(1.04) contrast(1.04) !important;
-  }
-
-  .featured-listings .listing-card:hover .listing-card__img::after {
-    opacity: 0.42 !important;
-    transform: translateX(38%) !important;
-  }
-
-  .featured-listings .listing-card__img > svg {
-    display: none !important;
-  }
-
-  .featured-listings .listing-card__badge {
-    top: 18px !important;
-    left: 18px !important;
-    z-index: 2 !important;
-    border: 1px solid rgba(255,255,255,0.2) !important;
-    background: rgba(5,9,15,0.72) !important;
-    color: rgba(255,255,255,0.88) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-  }
-
-  .featured-listings .listing-card__body {
-    padding: clamp(22px, 2vw, 32px) !important;
-    background: rgba(3,5,9,0.92) !important;
-    border-top: 1px solid rgba(255,255,255,0.1) !important;
-  }
-
-  .featured-listings .listing-card__price {
-    color: rgba(255,255,255,0.96) !important;
-    font-family: var(--font-serif) !important;
-    font-size: clamp(1.7rem, 2.3vw, 2.75rem) !important;
-    font-weight: 600 !important;
-  }
-
-  .featured-listings .listing-card:not(.listing-card--feature) .listing-card__price {
-    font-size: clamp(1.45rem, 1.7vw, 2rem) !important;
-  }
-
-  .featured-listings .listing-card__address {
-    color: rgba(255,255,255,0.78) !important;
-    font-size: 15px !important;
-    margin-top: 8px !important;
-  }
-
-  .featured-listings .listing-card__city,
-  .featured-listings .listing-card__details {
-    color: rgba(255,255,255,0.5) !important;
-  }
-
-  .featured-listings .listing-card__divider {
-    background: rgba(180,168,150,0.24) !important;
-  }
-
-  .featured-listings__footer {
-    text-align: center !important;
-  }
-
-  .featured-listings__footer .btn-navy {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 48px !important;
-    padding: 0 34px !important;
-    background: transparent !important;
-    border: 1px solid rgba(180,168,150,0.72) !important;
-    color: rgba(255,255,255,0.88) !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.14em !important;
-  }
-
-  .featured-listings__footer .btn-navy:hover {
-    background: rgba(180,168,150,0.9) !important;
-    color: #07101d !important;
-  }
-
-  @media (max-width: 900px) {
-    .featured-listings__header {
-      display: block !important;
-    }
-
-    .featured-listings .section-heading {
-      max-width: 11ch !important;
-    }
-
-    .featured-listings .listings-grid {
-      grid-template-columns: 1fr !important;
-      grid-auto-rows: auto !important;
-    }
-
-    .featured-listings .listing-card,
-    .featured-listings .listing-card--feature {
-      grid-row: auto !important;
-      grid-template-rows: minmax(330px, 58vw) auto !important;
-    }
-  }
-
-  @media (max-width: 560px) {
-    .featured-listings {
-      padding: 72px 18px !important;
-    }
-
-    .featured-listings .listing-card,
-    .featured-listings .listing-card--feature {
-      grid-template-rows: minmax(270px, 68vw) auto !important;
-    }
-
-    .featured-listings .listing-card__details {
-      flex-wrap: wrap !important;
-      gap: 8px 14px !important;
-    }
-  }
-
-  /* Featured listings refinement: quieter, more editorial */
-  .featured-listings .listings-grid {
-    grid-template-columns: minmax(0, 1.42fr) minmax(290px, 0.72fr) !important;
-    gap: clamp(14px, 1.6vw, 24px) !important;
-    align-items: stretch !important;
-  }
-
-  .featured-listings .listing-card {
-    background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
-  }
-
-  .featured-listings .listing-card:hover {
-    transform: translateY(-4px) !important;
-    box-shadow: none !important;
-  }
-
-  .featured-listings .listing-card--feature {
-    grid-template-rows: minmax(640px, 1fr) auto !important;
-  }
-
-  .featured-listings .listing-card:not(.listing-card--feature) {
-    grid-template-rows: minmax(250px, 1fr) auto !important;
-  }
-
-  .featured-listings .listing-card__img {
-    min-height: 250px !important;
-  }
-
-  .featured-listings .listing-card--feature .listing-card__img {
-    min-height: 640px !important;
-  }
-
-  .featured-listings .listing-card__img::before {
-    transition: transform 1400ms cubic-bezier(0.16, 1, 0.3, 1), filter 1400ms cubic-bezier(0.16, 1, 0.3, 1) !important;
-  }
-
-  .featured-listings .listing-card__img::after {
-    background: linear-gradient(180deg, rgba(2,4,8,0.04) 0%, rgba(2,4,8,0.48) 100%) !important;
-    opacity: 0.34 !important;
-    transform: none !important;
-    transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1) !important;
-  }
-
-  .featured-listings .listing-card:hover .listing-card__img::before {
-    transform: scale(1.055) !important;
-    filter: saturate(1.03) contrast(1.03) brightness(0.92) !important;
-  }
-
-  .featured-listings .listing-card:hover .listing-card__img::after {
-    opacity: 0.54 !important;
-    transform: none !important;
-  }
-
-  .featured-listings .listing-card__badge,
-  .featured-listings .listing-card__badge[style] {
-    top: 16px !important;
-    left: 16px !important;
-    padding: 4px 9px !important;
-    background: rgba(4,7,12,0.42) !important;
-    border: 0 !important;
-    color: rgba(255,255,255,0.74) !important;
-    box-shadow: none !important;
-    font-size: 9px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.17em !important;
-    line-height: 1.1 !important;
-  }
-
-  .featured-listings .listing-card__body {
-    padding: clamp(18px, 1.8vw, 30px) 0 0 !important;
-    background: transparent !important;
-    border-top: 0 !important;
-  }
-
-  .featured-listings .listing-card--feature .listing-card__body {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) auto !important;
-    column-gap: 34px !important;
-    align-items: end !important;
-    padding-top: clamp(24px, 2.6vw, 40px) !important;
-  }
-
-  .featured-listings .listing-card__price {
-    font-size: clamp(2rem, 3vw, 4.1rem) !important;
-    line-height: 0.96 !important;
-    letter-spacing: -0.015em !important;
-  }
-
-  .featured-listings .listing-card:not(.listing-card--feature) .listing-card__price {
-    font-size: clamp(1.45rem, 1.65vw, 2.05rem) !important;
-  }
-
-  .featured-listings .listing-card__address {
-    color: rgba(255,255,255,0.86) !important;
-    font-size: clamp(15px, 1.05vw, 17px) !important;
-    line-height: 1.35 !important;
-    letter-spacing: 0.01em !important;
-  }
-
-  .featured-listings .listing-card__city {
-    margin-top: 4px !important;
-    color: rgba(255,255,255,0.44) !important;
-    font-size: 12px !important;
-    letter-spacing: 0.08em !important;
-    text-transform: uppercase !important;
-  }
-
-  .featured-listings .listing-card__divider {
-    margin: 16px 0 13px !important;
-    background: rgba(180,168,150,0.18) !important;
-  }
-
-  .featured-listings .listing-card--feature .listing-card__divider {
-    grid-column: 1 / -1 !important;
-  }
-
-  .featured-listings .listing-card__details {
-    justify-content: flex-start !important;
-    gap: 12px !important;
-    color: rgba(255,255,255,0.42) !important;
-    font-size: 11px !important;
-    letter-spacing: 0.08em !important;
-    text-transform: uppercase !important;
-  }
-
-  .featured-listings .listing-card--feature .listing-card__details {
-    justify-self: end !important;
-    align-self: end !important;
-    padding-bottom: 4px !important;
-  }
-
-  .featured-listings__footer {
-    max-width: 1420px !important;
-    margin: -12px auto 0 !important;
-    text-align: right !important;
-  }
-
-  .featured-listings__footer .btn-navy {
-    min-height: 44px !important;
-    padding: 0 0 0 28px !important;
-    border: 0 !important;
-    border-left: 1px solid rgba(180,168,150,0.58) !important;
-    background: transparent !important;
-    color: rgba(255,255,255,0.72) !important;
-  }
-
-  @media (max-width: 900px) {
-    .featured-listings .listings-grid {
-      grid-template-columns: 1fr !important;
-      gap: 30px !important;
-    }
-
-    .featured-listings .listing-card,
-    .featured-listings .listing-card--feature,
-    .featured-listings .listing-card:not(.listing-card--feature) {
-      grid-template-rows: minmax(330px, 58vw) auto !important;
-    }
-
-    .featured-listings .listing-card--feature .listing-card__body {
-      display: block !important;
-    }
-
-    .featured-listings .listing-card--feature .listing-card__details {
-      justify-self: start !important;
-    }
-
-    .featured-listings__footer {
-      margin-top: 6px !important;
-      text-align: left !important;
-    }
-  }
-
-  @media (max-width: 560px) {
-    .featured-listings .listing-card,
-    .featured-listings .listing-card--feature,
-    .featured-listings .listing-card:not(.listing-card--feature) {
-      grid-template-rows: minmax(270px, 68vw) auto !important;
-    }
-
-    .featured-listings .listing-card__body {
-      padding-top: 18px !important;
-    }
-  }
-
-  /* Hero typography and spacing polish */
-  @media (min-width: 901px) {
-    .hero {
-      min-height: 100svh !important;
-      min-height: 100dvh !important;
-      height: 100svh !important;
-      height: 100dvh !important;
-    }
-
-    .hero__inner {
-      min-height: 100svh !important;
-      min-height: 100dvh !important;
-      height: 100% !important;
-    }
-
-    .hero__right {
-      min-height: 100svh !important;
-      min-height: 100dvh !important;
-      height: 100% !important;
-    }
-
-    .hero__left {
-      padding: clamp(52px, 6vh, 78px) 52px clamp(46px, 5vh, 64px) 82px !important;
-    }
-
-    .hero__left::before {
-      left: 58px !important;
-      top: 17% !important;
-      bottom: 17% !important;
-    }
-
-    .hero__right::before {
-      width: 30vw !important;
-      background: linear-gradient(
-        to right,
-        #05090f 0%,
-        rgba(5,9,15,0.97) 20%,
-        rgba(5,9,15,0.72) 52%,
-        rgba(5,9,15,0.26) 78%,
+        108deg,
+        rgba(5,9,15,0.72) 0%,
+        rgba(5,9,15,0.60) 28%,
+        rgba(5,9,15,0.32) 58%,
+        rgba(5,9,15,0.04) 80%,
         transparent 100%
       ) !important;
     }
 
-    .hero__media-slide {
-      transform: scale(1.04) translate3d(0,0,0) !important;
+    /*
+      Cinematic blur layer: fades left (solid blur) → right (sharp image).
+      z-index: -1 paints behind in-flow content but above the gradient bg.
+      display: block overrides the display:none set in styles.css.
+    */
+    body.home-page .hero__left::before {
+      display: block !important;
+      content: '' !important;
+      position: absolute !important;
+      inset: 0 !important;
+      z-index: -1 !important;
+      backdrop-filter: blur(4px) !important;
+      -webkit-backdrop-filter: blur(4px) !important;
+      mask-image: linear-gradient(
+        to right,
+        black 0%,
+        black 44%,
+        rgba(0,0,0,0.52) 64%,
+        transparent 88%
+      ) !important;
+      -webkit-mask-image: linear-gradient(
+        to right,
+        black 0%,
+        black 44%,
+        rgba(0,0,0,0.52) 64%,
+        transparent 88%
+      ) !important;
+      pointer-events: none !important;
     }
 
-    .hero__media-slide.is-active {
-      animation-duration: 24s !important;
+    /* Eyebrow */
+    body.home-page .hero__h1-location {
+      font-size: 8.5px !important;
+      letter-spacing: 0.30em !important;
+      color: rgba(218,207,187,0.48) !important;
+      border-bottom-color: rgba(218,207,187,0.11) !important;
+      padding-bottom: 12px !important;
+      margin-bottom: 22px !important;
     }
 
-    .hero__h1 {
-      max-width: 650px !important;
+    /* Headline */
+    body.home-page .hero__h1-line,
+    body.home-page .hero__h1-em {
+      font-size: clamp(3.3rem, 4.0vw, 4.75rem) !important;
+      line-height: 0.92 !important;
+    }
+    body.home-page .hero__h1-line {
+      letter-spacing: -0.022em !important;
+      color: rgba(250,246,237,0.98) !important;
+    }
+    body.home-page .hero__h1-em {
+      letter-spacing: -0.015em !important;
+      color: rgba(218,207,187,0.78) !important;
+      margin-top: 4px !important;
     }
 
-    .hero__h1-line,
-    .hero__h1-em {
-      white-space: nowrap !important;
-    }
-  }
-
-  .hero__h1-location {
-    max-width: 34rem !important;
-    margin-bottom: 28px !important;
-    font-size: 10px !important;
-    letter-spacing: 0.22em !important;
-  }
-
-  .hero__h1 {
-    max-width: 650px !important;
-    margin-bottom: 24px !important;
-  }
-
-  .hero__h1-line,
-  .hero__h1-em {
-    font-size: clamp(52px, 4.75vw, 72px) !important;
-    line-height: 1.01 !important;
-    letter-spacing: -0.01em !important;
-  }
-
-  .hero__h1-em {
-    max-width: 650px !important;
-    color: rgba(255,255,255,0.86) !important;
-  }
-
-  .hero__sub {
-    max-width: 40ch !important;
-    margin-bottom: 30px !important;
-    color: rgba(255,255,255,0.70) !important;
-    font-size: 16px !important;
-    line-height: 1.58 !important;
-  }
-
-  .hero__context {
-    display: block !important;
-    max-width: 44ch !important;
-    margin: -14px 0 34px !important;
-    color: rgba(255,255,255,0.44) !important;
-    font-size: 12.5px !important;
-    line-height: 1.68 !important;
-  }
-
-  .hero__trust {
-    max-width: 520px !important;
-    align-items: baseline !important;
-    justify-content: flex-start !important;
-    gap: 34px !important;
-    margin-bottom: 16px !important;
-    padding: 14px 0 13px !important;
-    border-top-color: rgba(255,255,255,0.08) !important;
-    border-bottom-color: rgba(255,255,255,0.08) !important;
-  }
-
-  .hero__trust-item,
-  .hero__trust-item:not(:first-child) {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    border-left: 0 !important;
-  }
-
-  .hero__trust-value {
-    font-size: 23px !important;
-    line-height: 1 !important;
-    color: rgba(255,255,255,0.92) !important;
-  }
-
-  .hero__trust-label {
-    max-width: 8.5rem !important;
-    margin-top: 6px !important;
-    color: rgba(180,168,150,0.72) !important;
-    font-size: 8.75px !important;
-    letter-spacing: 0.09em !important;
-  }
-
-  .hero__ctas {
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
-    gap: 20px !important;
-  }
-
-  .hero .btn-ghost.hero__primary-cta {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 48px !important;
-    height: 48px !important;
-    padding-inline: 30px !important;
-    line-height: 1 !important;
-    text-align: center !important;
-    vertical-align: middle !important;
-  }
-
-  .hero .btn-text-link {
-    color: rgba(255,255,255,0.46) !important;
-  }
-
-  .hero__reassurance {
-    color: rgba(255,255,255,0.34) !important;
-  }
-
-  @media (max-width: 1200px) and (min-width: 901px) {
-    .hero__left {
-      padding: clamp(50px, 5.5vh, 72px) 42px clamp(44px, 4.8vh, 60px) 58px !important;
+    /* Body copy — advisory, not biographical */
+    body.home-page .hero__sub {
+      font-size: clamp(0.93rem, 0.88vw, 1.04rem) !important;
+      font-weight: 300 !important;
+      color: rgba(250,246,237,0.52) !important;
+      line-height: 1.78 !important;
+      margin-bottom: 0 !important;
+      max-width: 480px !important;
     }
 
-    .hero__left::before {
-      left: 40px !important;
-    }
-
-    .hero__h1-line,
-    .hero__h1-em {
-      font-size: clamp(46px, 4.15vw, 56px) !important;
-    }
-  }
-
-  @media (max-width: 900px) {
-    .hero__left {
-      padding: 98px 34px 48px !important;
-    }
-
-    .hero__h1-location {
-      margin-bottom: 20px !important;
-    }
-
-    .hero__local-detail {
-      margin-bottom: 20px !important;
-    }
-
-    .hero__h1 {
-      max-width: 16ch !important;
-      margin-bottom: 24px !important;
-    }
-
-    .hero__h1-line,
-    .hero__h1-em {
-      font-size: clamp(40px, 9vw, 48px) !important;
-      line-height: 1.07 !important;
-      letter-spacing: -0.008em !important;
-    }
-
-    .hero__sub {
-      max-width: 42ch !important;
-      margin-bottom: 28px !important;
-      line-height: 1.6 !important;
-    }
-
-    .hero__context {
-      max-width: 42ch !important;
-      margin: -12px 0 30px !important;
-      font-size: 12.25px !important;
-      line-height: 1.62 !important;
-    }
-
-    .hero__trust {
-      max-width: 100% !important;
-      gap: 26px !important;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .hero__left {
-      padding: 88px 24px 42px !important;
-    }
-
-    .hero__h1 {
-      max-width: 15.5ch !important;
-    }
-
-    .hero__h1-line,
-    .hero__h1-em {
-      font-size: clamp(34px, 10.5vw, 39px) !important;
-      line-height: 1.08 !important;
-    }
-
-    .hero__sub {
-      max-width: 39ch !important;
-      margin-bottom: 26px !important;
-      font-size: 15px !important;
-    }
-
-    .hero__context {
-      max-width: 39ch !important;
-      margin: -10px 0 28px !important;
-      font-size: 12px !important;
-    }
-
-    .hero__trust {
-      display: grid !important;
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      gap: 14px !important;
-      align-items: start !important;
-      padding: 13px 0 !important;
-    }
-
-    .hero__trust-item:last-child {
-      grid-column: 1 / -1 !important;
-    }
-
-    .hero__trust-item,
-    .hero__trust-item:not(:first-child) {
+    /* Stats row */
+    body.home-page .hero__trust {
+      display: flex !important;
+      align-items: flex-start !important;
+      border-top: 0 !important;
+      border-bottom: none !important;
       padding: 0 !important;
+      margin-bottom: 30px !important;
+      max-width: 460px !important;
+      gap: clamp(22px, 2.8vw, 42px) !important;
     }
-
-    .hero__trust-value {
-      font-size: 22px !important;
+    body.home-page .hero__trust-item {
+      padding-right: 0 !important;
+      padding-left: 0 !important;
     }
-
-    .hero__trust-label {
-      max-width: 7.5rem !important;
+    body.home-page .hero__trust-item:not(:first-child) {
+      padding-left: 26px !important;
+      border-left: 1px solid rgba(218,207,187,0.12) !important;
+    }
+    body.home-page .hero__trust-value {
+      font-family: var(--font-serif) !important;
+      font-size: 21px !important;
+      font-weight: 400 !important;
+      color: rgba(250,246,237,0.84) !important;
+      letter-spacing: -0.01em !important;
+      line-height: 1 !important;
+    }
+    body.home-page .hero__trust-label {
       font-size: 8px !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.18em !important;
+      text-transform: uppercase !important;
+      color: rgba(218,207,187,0.38) !important;
+      margin-top: 7px !important;
+      line-height: 1.45 !important;
     }
 
-    .hero__ctas {
-      margin-top: 12px !important;
-      gap: 12px !important;
+    /* CTAs */
+    body.home-page .hero__primary-cta {
+      min-height: 46px !important;
+      padding: 0 28px !important;
+      font-size: 10.5px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.13em !important;
+      background: #f4f1ea !important;
+      color: #0c0e10 !important;
+      border-color: transparent !important;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.24) !important;
+      transition: background 0.22s ease, transform 0.18s ease, box-shadow 0.22s ease !important;
     }
-  }
-
-  @media (max-width: 380px) {
-    .hero__left {
-      padding-inline: 18px !important;
+    body.home-page .hero__primary-cta:hover {
+      background: rgba(255,253,248,1) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.30) !important;
+    }
+    body.home-page .hero .btn-text-link {
+      font-size: 11px !important;
+      color: rgba(244,241,234,0.34) !important;
+      letter-spacing: 0.05em !important;
+    }
+    body.home-page .hero .btn-text-link:hover {
+      color: rgba(244,241,234,0.72) !important;
     }
 
-    .hero__h1-line,
-    .hero__h1-em {
-      font-size: clamp(31px, 10vw, 34px) !important;
+    /* Reassurance */
+    body.home-page .hero__reassurance {
+      font-size: 10px !important;
+      letter-spacing: 0.10em !important;
+      color: rgba(218,207,187,0.26) !important;
+      margin-top: 10px !important;
     }
 
-    .hero__trust {
-      grid-template-columns: 1fr !important;
-      gap: 12px !important;
+    /* Location label — editorial photo caption */
+    body.home-page .hero__location-label {
+      border-left-color: rgba(218,207,187,0.24) !important;
+      padding: 0 0 0 11px !important;
+      gap: 4px !important;
+    }
+    body.home-page .hero__location-kicker {
+      font-family: var(--font-serif) !important;
+      font-style: italic !important;
+      font-weight: 400 !important;
+      font-size: 9px !important;
+      letter-spacing: 0.03em !important;
+      text-transform: none !important;
+      color: rgba(218,207,187,0.38) !important;
+    }
+    body.home-page .hero__location-name {
+      font-size: clamp(0.92rem, 1.2vw, 1.22rem) !important;
+      font-weight: 400 !important;
+      color: rgba(250,246,237,0.76) !important;
     }
 
-    .hero__trust-label {
-      max-width: none !important;
+    /* Mobile */
+    @media (max-width: 900px) {
+      body.home-page .hero__h1-line,
+      body.home-page .hero__h1-em { font-size: clamp(2.6rem, 8vw, 3.6rem) !important; }
+      body.home-page .hero__sub { max-width: none !important; }
+      body.home-page .hero__trust {
+        max-width: none !important;
+        grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+      }
+      /* Blur fades across full width on tablet — image visible on right */
+      body.home-page .hero__left::before {
+        mask-image: linear-gradient(
+          to right,
+          black 0%,
+          black 38%,
+          rgba(0,0,0,0.45) 62%,
+          transparent 92%
+        ) !important;
+        -webkit-mask-image: linear-gradient(
+          to right,
+          black 0%,
+          black 38%,
+          rgba(0,0,0,0.45) 62%,
+          transparent 92%
+        ) !important;
+      }
     }
-  }
-</style>
-
+    @media (max-width: 600px) {
+      body.home-page .hero__h1-line,
+      body.home-page .hero__h1-em {
+        font-size: clamp(1.62rem, 6.75vw, 2rem) !important;
+        line-height: 0.98 !important;
+        letter-spacing: -0.01em !important;
+        white-space: normal !important;
+      }
+      body.home-page .hero__primary-cta { width: 100% !important; justify-content: center !important; }
+      body.home-page .hero .btn-text-link { width: 100% !important; justify-content: center !important; }
+      body.home-page .hero__trust {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      body.home-page .hero__trust-item { padding-right: 12px !important; }
+      body.home-page .hero__trust-item:not(:first-child) { padding-left: 12px !important; }
+      body.home-page .hero__trust-item:last-child { grid-column: auto !important; }
+      body.home-page .hero__trust-label {
+        max-width: 4.8rem !important;
+        white-space: normal !important;
+        overflow-wrap: normal !important;
+        letter-spacing: 0.10em !important;
+      }
+      /* Full blur across stacked layout on mobile — no visible fade edge needed */
+      body.home-page .hero__left::before {
+        mask-image: linear-gradient(
+          to bottom,
+          black 0%,
+          black 72%,
+          rgba(0,0,0,0.4) 88%,
+          transparent 100%
+        ) !important;
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          black 0%,
+          black 72%,
+          rgba(0,0,0,0.4) 88%,
+          transparent 100%
+        ) !important;
+      }
+    }
+  </style>
 </head>
-<body>
+<body class="home-page">
 
-  <!-- ── Nav ── -->
-  <nav class="nav nav--inverse" id="main-nav">
-    <a href="index.html" class="nav__logo" aria-label="The Smith Dobrowsky Team — Home">
-      <img class="nav__logo-img" src="assets/logo-transparent-header.png" alt="The Smith Dobrowsky Team">
-    </a>
-    <ul class="nav__links" role="list">
-      <li><a href="listings.html" class="nav__link">Listings</a></li>
-      <li><a href="about.html"    class="nav__link">About</a></li>
-      <li><a href="contact.html"  class="nav__link">Contact</a></li>
-    </ul>
-    <a href="tel:9056393355" class="nav__cta nav__cta--phone" aria-label="Call The Smith Dobrowsky Team at 905-639-3355">905-639-3355</a>
-    <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <!-- ── Mobile menu ── -->
-  <div class="nav__mobile-menu" id="nav-mobile-menu" aria-hidden="true">
-    <a href="listings.html">Listings</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-    <a href="tel:9056393355" class="nav__cta nav__cta--phone" aria-label="Call The Smith Dobrowsky Team at 905-639-3355">Call 905-639-3355</a>
-  </div>
+  <script src="js/nav.js"></script>
 
   <main>
 
@@ -2861,46 +286,43 @@
         <div class="hero__left">
 
           <div class="hero__h1-location">
-            Burlington • Hamilton • Surrounding Communities
+            Burlington · Hamilton · Waterdown
           </div>
 
-          <!-- Headline — emotionally-led display -->
           <h1 class="hero__h1" id="hero-heading">
-            <span class="hero__h1-line">Your next <span style="color:#8eadb5">move</span></span>
-            <em class="hero__h1-em">has to be right.</em>
+            <span class="hero__h1-line">Your neighbourhood.</span>
+            <em class="hero__h1-em">Our life's work.</em>
           </h1>
 
-          <!-- Supporting copy — 45–65 chars per line -->
           <p class="hero__sub">
-            A clear, steady approach to buying and selling across Burlington,
-            Hamilton and the surrounding communities.
+            Calm strategy, deep local knowledge, and a considered plan
+            for every move — so whatever you're doing next,
+            you do it with clarity.
           </p>
 
-          <!-- Stats row -->
           <div class="hero__trust" aria-label="Smith Dobrowsky Team highlights">
             <div class="hero__trust-item">
               <span class="hero__trust-value">500+</span>
-              <span class="hero__trust-label">Moves Guided</span>
+              <span class="hero__trust-label">Moves guided</span>
             </div>
             <div class="hero__trust-item">
               <span class="hero__trust-value">20+</span>
-              <span class="hero__trust-label">Years in Market</span>
+              <span class="hero__trust-label">Years rooted</span>
             </div>
             <div class="hero__trust-item">
               <span class="hero__trust-value">6</span>
-              <span class="hero__trust-label">Communities Covered</span>
+              <span class="hero__trust-label">Communities</span>
             </div>
           </div>
 
-          <!-- Hero CTAs -->
           <div class="hero__ctas">
-            <a href="contact.html" class="btn-ghost hero__primary-cta">Start Your Move</a>
+            <a href="contact.html" class="btn-ghost hero__primary-cta">Start a conversation</a>
             <a href="listings.html" class="btn-text-link">
-              Explore Homes Near You <span aria-hidden="true">→</span>
+              Browse listings <span aria-hidden="true">→</span>
             </a>
           </div>
 
-          <p class="hero__reassurance">Clear advice. No pressure. Just the right move.</p>
+          <p class="hero__reassurance">Unhurried. Considered. Always local.</p>
 
         </div><!-- /hero__left -->
 
@@ -2911,6 +333,10 @@
               poster="assets/hero-loop-poster.jpg">
               <source src="assets/hero-loop.mp4" type="video/mp4">
             </video>
+            <div class="hero__location-label" aria-live="polite">
+              <span class="hero__location-kicker">Local Lens</span>
+              <span class="hero__location-name">Burlington &amp; Hamilton</span>
+            </div>
           </div>
           <div class="hero__caption">
             <span class="hero__caption-rule"></span>
@@ -2931,25 +357,24 @@
         <div class="meet-team__photo meet-editorial__media">
           <img
             class="meet-editorial__image"
-            src="assets/meet-geoff-katrinna-composite.png"
+            src="assets/meet-geoff-katrinna-composite.jpg"
             alt="Geoff and Katrinna Smith Dobrowsky — Burlington &amp; Hamilton Realtors"
             loading="lazy"
           />
         </div>
 
         <div class="meet-team__content meet-editorial__content">
-          <span class="meet-team__eyebrow">Burlington &amp; Hamilton Realtors®</span>
+          <span class="meet-team__eyebrow">Burlington &amp; Hamilton Realtors® · Since 2006</span>
           <h2 class="meet-team__heading">
-            <span class="meet-heading-line">Every type of&nbsp;move.</span><br>
+            <span class="meet-heading-line">Every type</span><span class="meet-heading-line"> of move.</span><br>
             <em>One team.</em>
           </h2>
           <p class="meet-team__body">
-            Since 2006, Geoff and Katrinna have worked with first-time buyers,
-            growing families, downsizers, and seasoned investors — helping clients
-            buy, sell, and build wealth through every market this region has seen.
-            Whether you're purchasing your first home, selling the family house,
-            or expanding a portfolio, you're working with a team that has done it
-            before.
+            First-time buyers. Growing families. Downsizers. Seasoned investors.
+            Geoff and Katrinna have guided every kind of move across Burlington,
+            Hamilton, and the surrounding communities — through every market
+            this region has seen since 2006. When you work with this team,
+            you work with people who have already done it before.
           </p>
           <a href="hero.html" class="meet-team__cta">Meet the Team</a>
         </div>
@@ -2961,15 +386,20 @@
          FEATURED LISTINGS
     ══════════════════════════════════════ -->
     <section class="section section--white featured-listings">
-      <div class="featured-listings__header reveal">
-        <div class="section-eyebrow">Current Properties</div>
-        <h2 class="section-heading">Featured Listings</h2>
+      <div class="featured-listings__header featured-listings__header--editorial reveal">
+        <div class="featured-listings__title-block">
+          <div class="section-eyebrow">Current Properties</div>
+          <h2 class="section-heading">
+            <span class="section-heading-line">Featured</span><br>
+            <em>Listings</em>
+          </h2>
+        </div>
       </div>
       <div class="listings-grid">
 
-        <div class="listing-card listing-card--feature reveal">
+        <a href="55-chesley.html" class="listing-card listing-card--feature reveal" aria-label="View listing details for 55 Chesley Street">
           <div class="listing-card__img">
-            <div class="listing-card__badge" style="background:#1B2A4A;color:#fff">For Sale</div>
+            <div class="listing-card__badge listing-card__badge--dark">For Sale</div>
           </div>
           <div class="listing-card__body">
             <div class="listing-card__price">$939,900</div>
@@ -2977,14 +407,14 @@
             <div class="listing-card__city">Hamilton, ON L9C 3V9</div>
             <div class="listing-card__divider"></div>
             <div class="listing-card__details"><span>3 Bed</span><span>3 Bath</span><span>1,474 sq ft</span></div>
-            <div style="margin-top:10px;font-size:0.72rem;letter-spacing:0.06em;color:#706860;opacity:0.8">MLS® 40823990</div>
+            <div class="listing-card__mls">MLS® 40823990</div>
           </div>
-        </div>
+        </a>
 
-        <div class="listing-card reveal" style="transition-delay:0.1s">
+        <div class="listing-card reveal reveal-delay-1">
           <div class="listing-card__img">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 6L4 22v22h14V32h12v12h14V22L24 6z" fill="#9a9080" opacity="0.4"/><path d="M24 6L4 22v22h14V32h12v12h14V22L24 6z" stroke="#9a9080" stroke-width="1.5"/></svg>
-            <div class="listing-card__badge" style="background:#1B2A4A;color:#fff">New Listing</div>
+            <div class="listing-card__badge listing-card__badge--dark">New Listing</div>
           </div>
           <div class="listing-card__body">
             <div class="listing-card__price">$899,000</div>
@@ -2995,10 +425,10 @@
           </div>
         </div>
 
-        <div class="listing-card reveal" style="transition-delay:0.2s">
+        <div class="listing-card reveal reveal-delay-2">
           <div class="listing-card__img">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 6L4 22v22h14V32h12v12h14V22L24 6z" fill="#9a9080" opacity="0.4"/><path d="M24 6L4 22v22h14V32h12v12h14V22L24 6z" stroke="#9a9080" stroke-width="1.5"/></svg>
-            <div class="listing-card__badge" style="background:#F7F5F1;color:#1B2A4A;border:1px solid #1B2A4A">Open House</div>
+            <div class="listing-card__badge listing-card__badge--light">Open House</div>
           </div>
           <div class="listing-card__body">
             <div class="listing-card__price">$1,575,000</div>
@@ -3016,51 +446,232 @@
     </section>
 
     <!-- ══════════════════════════════════════
-         TESTIMONIALS
+         COMMUNITIES — Interactive Map
     ══════════════════════════════════════ -->
-    <section class="section section--cream">
-      <div style="margin-bottom:48px;text-align:center" class="reveal">
-        <div class="section-eyebrow">What Our Clients Say</div>
-        <h2 class="section-heading">Client Testimonials</h2>
-      </div>
-      <div class="testimonials-grid">
-        <div class="testimonial-card reveal">
-          <p class="testimonial-card__quote">"We couldn't have asked for a better team. They knew exactly what we needed and found us our dream home in Waterdown."</p>
-          <div class="testimonial-card__divider"></div>
-          <div class="testimonial-card__name">Sarah &amp; Michael T.</div>
-          <div class="testimonial-card__location">Waterdown</div>
+    <section class="cm-section" aria-labelledby="cm-heading">
+      <div class="cm-inner">
+
+        <div class="cm-left reveal">
+          <header class="cm-header">
+            <div class="cm-eyebrow">Neighbourhood Expertise</div>
+            <h2 class="cm-heading" id="cm-heading">Local insight,<br><em>street by street.</em></h2>
+            <p class="cm-copy">From Waterdown family homes to Burlington lakefront moves, Geoff and Katrina help clients understand the neighbourhoods, price patterns and small details that shape better decisions.</p>
+          </header>
+
+          <div class="cm-focus" aria-live="polite" aria-atomic="true">
+            <p class="cm-focus__prompt">Hover a community on the map</p>
+            <h3 class="cm-focus__name"></h3>
+            <p class="cm-focus__line"></p>
+          </div>
+
+          <a class="cm-cta" href="communities.html">Explore the Community Guide</a>
+          <p class="cm-cta-note">Detailed guidance for Burlington, Waterdown, Hamilton, Flamborough, Milton and Oakville.</p>
         </div>
-        <div class="testimonial-card reveal" style="transition-delay:0.1s">
-          <p class="testimonial-card__quote">"Professional, knowledgeable, and genuinely caring. The Smith Dobrowsky Team made selling our home completely stress-free."</p>
-          <div class="testimonial-card__divider"></div>
-          <div class="testimonial-card__name">Jennifer K.</div>
-          <div class="testimonial-card__location">Burlington</div>
+
+        <div class="cm-map-panel reveal" aria-label="Stylized map of Burlington, Waterdown, Hamilton, Flamborough, Oakville and Milton">
+          <svg class="cm-svg" viewBox="0 0 680 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Western GTA, Halton and Hamilton service area">
+            <title>Western GTA, Halton and Hamilton service area</title>
+            <desc>Lake Ontario, local route lines and relative community positions for Burlington, Waterdown, Hamilton, Flamborough, Oakville and Milton.</desc>
+            <defs>
+              <pattern id="cm-map-grid" width="46" height="46" patternUnits="userSpaceOnUse">
+                <path class="cm-grid" d="M46 0H0V46" fill="none"/>
+              </pattern>
+              <linearGradient id="cm-lake-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2F3D46"/>
+                <stop offset="100%" stop-color="#1C252D"/>
+              </linearGradient>
+            </defs>
+
+            <rect class="cm-map-field" width="680" height="520"/>
+            <rect width="680" height="520" fill="url(#cm-map-grid)" opacity="0.48"/>
+
+            <path class="cm-contour" d="M56 134 C132 88 206 95 284 122 S424 148 498 104 S614 72 662 96"/>
+            <path class="cm-contour" d="M36 244 C104 202 186 210 252 236 S374 286 466 240 S590 196 654 218"/>
+            <path class="cm-contour" d="M84 336 C154 306 232 304 306 332 S438 372 526 338 S622 314 668 336"/>
+            <path class="cm-contour" d="M94 58 C154 46 218 56 286 82 S420 84 488 52"/>
+
+            <path class="cm-lake" d="M0 434 C72 412 142 406 216 420 C302 437 360 430 432 382 C506 332 584 330 680 304 L680 520 L0 520 Z" fill="url(#cm-lake-grad)"/>
+            <path class="cm-lake-line" d="M0 434 C72 412 142 406 216 420 C302 437 360 430 432 382 C506 332 584 330 680 304"/>
+            <text class="cm-svg__watermark" x="500" y="442">Lake Ontario</text>
+
+            <path class="cm-road cm-road--major" data-route="qew" d="M132 414 C202 386 276 368 344 342 S468 292 594 270"/>
+            <path class="cm-road cm-road--major" data-route="403" d="M174 386 C232 334 276 292 334 244 S424 178 498 154"/>
+            <path class="cm-road cm-road--major" data-route="407" d="M292 186 C358 164 426 152 516 142 S612 134 656 116"/>
+            <path class="cm-road cm-road--major" data-route="rural" d="M124 178 C170 206 224 222 284 226 S392 216 468 184"/>
+            <path class="cm-road" d="M222 382 C236 322 278 278 334 244"/>
+            <path class="cm-road" d="M392 326 C420 274 460 204 498 154"/>
+            <path class="cm-road" d="M178 206 C210 260 218 324 222 382"/>
+            <path class="cm-road" d="M392 326 C440 320 488 304 538 282"/>
+
+            <text class="cm-svg__watermark" x="140" y="458">Hamilton Harbour</text>
+            <text class="cm-svg__watermark" x="380" y="118">Escarpment</text>
+
+            <!-- Burlington — callout: above-left -->
+            <g class="cm-pin" data-community="burlington" role="button" tabindex="0" aria-label="Burlington">
+              <circle class="cm-pin__halo" cx="392" cy="326" r="9"/>
+              <circle class="cm-pin__bracket" cx="392" cy="326" r="5.5"/>
+              <text class="cm-pin__label" x="406" y="313">Burlington</text>
+              <line class="cm-connector" x1="392" y1="318" x2="361" y2="278"/>
+              <g class="cm-callout" transform="translate(300,228)">
+                <rect class="cm-callout__bg" width="122" height="50" rx="5"/>
+                <text class="cm-callout__name" x="61" y="20">Burlington</text>
+                <text class="cm-callout__tag" x="61" y="38">Lakefront &amp; commuter</text>
+              </g>
+            </g>
+
+            <!-- Waterdown — callout: upper-left -->
+            <g class="cm-pin" data-community="waterdown" role="button" tabindex="0" aria-label="Waterdown">
+              <circle class="cm-pin__halo" cx="334" cy="244" r="9"/>
+              <circle class="cm-pin__bracket" cx="334" cy="244" r="5.5"/>
+              <text class="cm-pin__label" x="348" y="232">Waterdown</text>
+              <line class="cm-connector" x1="334" y1="236" x2="297" y2="214"/>
+              <g class="cm-callout" transform="translate(233,164)">
+                <rect class="cm-callout__bg" width="128" height="50" rx="5"/>
+                <text class="cm-callout__name" x="64" y="20">Waterdown</text>
+                <text class="cm-callout__tag" x="64" y="38">Village &amp; escarpment</text>
+              </g>
+            </g>
+
+            <!-- Hamilton — callout: left -->
+            <g class="cm-pin" data-community="hamilton" role="button" tabindex="0" aria-label="Hamilton">
+              <circle class="cm-pin__halo" cx="222" cy="382" r="9"/>
+              <circle class="cm-pin__bracket" cx="222" cy="382" r="5.5"/>
+              <text class="cm-pin__label" x="130" y="372">Hamilton</text>
+              <line class="cm-connector" x1="214" y1="378" x2="164" y2="358"/>
+              <g class="cm-callout" transform="translate(52,308)">
+                <rect class="cm-callout__bg" width="112" height="50" rx="5"/>
+                <text class="cm-callout__name" x="56" y="20">Hamilton</text>
+                <text class="cm-callout__tag" x="56" y="38">Urban character</text>
+              </g>
+            </g>
+
+            <!-- Flamborough — callout: upper-right -->
+            <g class="cm-pin" data-community="flamborough" role="button" tabindex="0" aria-label="Flamborough">
+              <circle class="cm-pin__halo" cx="178" cy="206" r="9"/>
+              <circle class="cm-pin__bracket" cx="178" cy="206" r="5.5"/>
+              <text class="cm-pin__label" x="164" y="188" text-anchor="end">Flamborough</text>
+              <line class="cm-connector" x1="186" y1="200" x2="288" y2="160"/>
+              <g class="cm-callout" transform="translate(224,110)">
+                <rect class="cm-callout__bg" width="128" height="50" rx="5"/>
+                <text class="cm-callout__name" x="64" y="20">Flamborough</text>
+                <text class="cm-callout__tag" x="64" y="38">Rural &amp; escarpment</text>
+              </g>
+            </g>
+
+            <!-- Oakville — callout: above -->
+            <g class="cm-pin" data-community="oakville" role="button" tabindex="0" aria-label="Oakville">
+              <circle class="cm-pin__halo" cx="538" cy="282" r="9"/>
+              <circle class="cm-pin__bracket" cx="538" cy="282" r="5.5"/>
+              <text class="cm-pin__label" x="552" y="270">Oakville</text>
+              <line class="cm-connector" x1="538" y1="274" x2="511" y2="246"/>
+              <g class="cm-callout" transform="translate(450,196)">
+                <rect class="cm-callout__bg" width="122" height="50" rx="5"/>
+                <text class="cm-callout__name" x="61" y="20">Oakville</text>
+                <text class="cm-callout__tag" x="61" y="38">Premium &amp; schools</text>
+              </g>
+            </g>
+
+            <!-- Milton — callout: left -->
+            <g class="cm-pin" data-community="milton" role="button" tabindex="0" aria-label="Milton">
+              <circle class="cm-pin__halo" cx="498" cy="154" r="9"/>
+              <circle class="cm-pin__bracket" cx="498" cy="154" r="5.5"/>
+              <text class="cm-pin__label" x="512" y="142">Milton</text>
+              <line class="cm-connector" x1="490" y1="150" x2="460" y2="136"/>
+              <g class="cm-callout" transform="translate(348,86)">
+                <rect class="cm-callout__bg" width="112" height="50" rx="5"/>
+                <text class="cm-callout__name" x="56" y="20">Milton</text>
+                <text class="cm-callout__tag" x="56" y="38">New family homes</text>
+              </g>
+            </g>
+          </svg>
+          <div class="cm-map-caption">Western GTA service area — hover a community pin to explore.</div>
         </div>
-        <div class="testimonial-card reveal" style="transition-delay:0.2s">
-          <p class="testimonial-card__quote">"After 20 years in the area, they know every street. That local knowledge is invaluable."</p>
-          <div class="testimonial-card__divider"></div>
-          <div class="testimonial-card__name">Robert &amp; Linda M.</div>
-          <div class="testimonial-card__location">Hamilton</div>
-        </div>
+
       </div>
     </section>
 
     <!-- ══════════════════════════════════════
-         COMMUNITIES
+         CLIENT STORIES
     ══════════════════════════════════════ -->
-    <section class="section section--navy">
-      <div style="text-align:center;margin-bottom:48px" class="reveal">
-        <div class="section-eyebrow">Where We Work</div>
-        <h2 class="section-heading section-heading--white">Our Communities</h2>
-      </div>
-      <div class="communities-list reveal">
-        <a href="listings.html" class="community-pill">Waterdown</a>
-        <a href="listings.html" class="community-pill">Burlington</a>
-        <a href="listings.html" class="community-pill">Flamborough</a>
-        <a href="listings.html" class="community-pill">Hamilton</a>
-        <a href="listings.html" class="community-pill">Milton</a>
-        <a href="listings.html" class="community-pill">Oakville</a>
-      </div>
+    <section class="cs-section" aria-labelledby="cs-heading">
+      <div class="cs-inner">
+
+        <!-- Section header -->
+        <header class="cs-header reveal">
+          <div class="cs-eyebrow">Client Stories</div>
+          <h2 class="cs-section-title" id="cs-heading">In their words.</h2>
+        </header>
+
+        <!-- Story 01 — Nathan Small -->
+        <article class="cs-story cs-story--a reveal">
+          <div class="cs-story__content">
+            <div class="cs-story__label">
+              <span class="cs-story__num">01</span>
+              <span class="cs-story__sep">—</span>
+              <span class="cs-story__tag">Burlington · Home Purchase</span>
+            </div>
+            <blockquote class="cs-story__pull">"They found the home I hadn't thought to look for."</blockquote>
+            <p class="cs-story__body">I had a list. Square footage, school zone, commute distance — I thought I knew what I wanted. Geoff listened to the list, then asked a few questions I hadn't prepared for. He showed me a house in Aldershot that wasn't on any of my searches. Two weeks later I made an offer. I've been there three years and I've never doubted it. He knew before I did.</p>
+            <footer class="cs-story__attr">
+              <div class="cs-story__name">Nathan Small</div>
+              <div class="cs-story__role">First-time buyer</div>
+            </footer>
+          </div>
+          <figure class="cs-story__fig" aria-hidden="true">
+            <img src="assets/NathanSmall.webp" alt="" loading="lazy">
+          </figure>
+        </article>
+
+        <!-- Story 02 — Derek Moorse & Alicia Dusil — FEATURED -->
+        <article class="cs-story cs-story--feat reveal">
+          <div class="cs-story__feat-cap">
+            <div class="cs-story__label">
+              <span class="cs-story__num">02</span>
+              <span class="cs-story__sep">—</span>
+              <span class="cs-story__tag">Burlington · Dream Home</span>
+            </div>
+            <span class="cs-feat-wm" aria-hidden="true">"</span>
+            <h3 class="cs-feat-headline">What Feels Right.</h3>
+          </div>
+          <div class="cs-story__feat-grid">
+            <div class="cs-story__feat-text">
+              <p class="cs-story__body">Going into the situation I honestly questioned the necessity and value of a real estate agent — with online resources and public access to information, we considered tackling the task on our own. That would have been a mistake. You both helped us clarify our wants, needs and wishes, formulated a plan that made sense with our lifestyle, and took care of the endless details that make or break a deal.</p>
+              <p class="cs-story__body">At a point where I expected us to collectively throw in the towel, you asked us if we really wanted this house. When we said yes, you showed resolve and determination that surpassed even our own — and it was our vision. Thanks to your ability and persistence, we are now raising our family in our dream home and thankful every day for your help.</p>
+              <footer class="cs-story__attr">
+                <div class="cs-story__name">Derek Moorse &amp; Alicia Dusil</div>
+                <div class="cs-story__role">Buyers · Burlington</div>
+              </footer>
+            </div>
+            <figure class="cs-story__fig cs-story__fig--feat" aria-hidden="true">
+              <img src="assets/Derek-Moorse-Alicia-Dusil.webp" alt="" loading="lazy">
+            </figure>
+          </div>
+        </article>
+
+        <!-- Story 03 — George Arrendondo & Nancy Santana -->
+        <article class="cs-story cs-story--b reveal">
+          <figure class="cs-story__fig" aria-hidden="true">
+            <img src="assets/George-Arrendondo-Nancy-Santana.webp" alt="" loading="lazy">
+          </figure>
+          <div class="cs-story__content">
+            <div class="cs-story__label">
+              <span class="cs-story__num">03</span>
+              <span class="cs-story__sep">—</span>
+              <span class="cs-story__tag">Hamilton · New Beginnings</span>
+            </div>
+            <blockquote class="cs-story__pull">"You made the process seem very easy."</blockquote>
+            <p class="cs-story__body">Being relatively new to the country, we felt a bit overwhelmed at times — but you made the process seem very easy. Your professionalism and knowledge helped us understand all the details of the buying process. We greatly appreciated your patience, and your daily communication led us to just the right house for our family. We would not hesitate to recommend you to anyone in need of realty services.</p>
+            <footer class="cs-story__attr">
+              <div class="cs-story__name">George Arrendondo &amp; Nancy Santana</div>
+              <div class="cs-story__role">Buyers · Hamilton</div>
+            </footer>
+          </div>
+        </article>
+
+        <!-- Trust tagline -->
+        <p class="cs-trust">Trusted by buyers, sellers and families across Hamilton, Burlington, Waterdown and beyond.</p>
+
+      </div><!-- /cs-inner -->
     </section>
 
     <!-- ══════════════════════════════════════
@@ -3069,7 +680,7 @@
     <section class="cta-band reveal">
       <h2 class="cta-band__heading">Ready to Find Your Next Home?</h2>
       <p class="cta-band__sub">Let's start a conversation about what matters most to you.</p>
-      <a href="contact.html" class="btn-navy" style="display:inline-block">Free Home Evaluation</a>
+      <a href="contact.html" class="btn-navy btn-inline">Free Home Evaluation</a>
     </section>
 
   </main>
@@ -3093,157 +704,148 @@
           <div class="footer__col-title">Quick Links</div>
           <a href="listings.html" class="footer__col-link">Listings</a>
           <a href="about.html"    class="footer__col-link">About Us</a>
-          <a href="contact.html"  class="footer__col-link">Communities</a>
-          <a href="contact.html"  class="footer__col-link">Testimonials</a>
-          <a href="contact.html"  class="footer__col-link">Contact</a>
+          <a href="communities.html" class="footer__col-link">Communities</a>
+          <a href="contact.html"     class="footer__col-link">Testimonials</a>
+          <a href="contact.html"     class="footer__col-link">Contact</a>
         </div>
         <div>
           <div class="footer__col-title">Communities</div>
-          <a href="listings.html" class="footer__col-link">Waterdown</a>
-          <a href="listings.html" class="footer__col-link">Burlington</a>
-          <a href="listings.html" class="footer__col-link">Hamilton</a>
-          <a href="listings.html" class="footer__col-link">Milton</a>
-          <a href="listings.html" class="footer__col-link">Oakville</a>
+          <a href="communities.html#waterdown"   class="footer__col-link">Waterdown</a>
+          <a href="communities.html#burlington"  class="footer__col-link">Burlington</a>
+          <a href="communities.html#hamilton"    class="footer__col-link">Hamilton</a>
+          <a href="communities.html#flamborough" class="footer__col-link">Flamborough</a>
+          <a href="communities.html#milton"      class="footer__col-link">Milton</a>
+          <a href="communities.html#oakville"    class="footer__col-link">Oakville</a>
         </div>
       </div>
     </div>
     <div class="footer__bottom">
       <span class="footer__legal">© 2026 The Smith Dobrowsky Team. All rights reserved. Real estate services in Ontario.</span>
-      <span class="footer__legal">MLS® · REALTORS® · <a href="#" style="color:inherit">Privacy Policy</a></span>
+      <span class="footer__legal">MLS® · REALTORS® · <a href="#" class="footer__legal-link">Privacy Policy</a></span>
     </div>
   </footer>
 
   <script src="js/main.js"></script>
   <script>
     (() => {
-      const nav = document.getElementById('main-nav');
-      if (!nav) return;
-
-      const updateStickyNav = () => {
-        nav.classList.toggle('nav--scrolled', window.scrollY > 24);
-      };
-
-      updateStickyNav();
-      window.addEventListener('scroll', updateStickyNav, { passive: true });
-    })();
-  </script>
-  <script>
-    (() => {
       const mediaWrap = document.querySelector('.hero__video-wrap');
       if (!mediaWrap) return;
 
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ── Slide sequence: Escarpment first for warm, aspirational opening
       const heroMedia = [
         {
-          type: 'image',
-          src: 'assets/GettyImages-2165218184.jpg',
-          alt: 'Burlington and Hamilton neighbourhood lifestyle',
-          position: 'center center'
-        },
-        {
-          type: 'image',
-          src: 'assets/GettyImages-2235188440.jpg',
-          alt: 'Local neighbourhood lifestyle near Burlington and Hamilton',
-          position: 'center center'
-        },
-        {
-          type: 'image',
-          src: 'assets/GettyImages-1388101414.jpg',
-          alt: 'Premium residential lifestyle in the Burlington Hamilton region',
-          position: 'center center'
-        },
-        {
-          type: 'image',
-          src: 'assets/GettyImages-2162730763.jpg',
-          alt: 'Refined neighbourhood lifestyle in the Burlington Hamilton region',
-          position: 'center center'
-        },
-        {
-          type: 'image',
           src: 'assets/GettyImages-2231150857.jpg',
-          alt: 'Calm local lifestyle scene in the Burlington Hamilton area',
-          position: 'center center'
+          alt: 'Golden hour light over the Niagara Escarpment, trails and open sky above Burlington',
+          position: '50% 36%',
+          label: 'Above the city',
+          kb: { fromScale: 1.03, fromX: '0.3%', fromY: '0.7%', toScale: 1.09, toX: '-0.2%', toY: '-0.3%' }
         },
         {
-          type: 'image',
-          src: 'assets/GettyImages-2257733646.jpg',
-          alt: 'Neighbourhood and home lifestyle in the greater Burlington area',
-          position: 'center center'
-        },
-        {
-          type: 'image',
-          src: 'assets/GettyImages-152021463.jpg',
-          alt: 'Residential lifestyle and curb appeal in the region',
-          position: 'center center'
-        },
-        {
-          type: 'image',
           src: 'assets/GettyImages-2248448116.jpg',
-          alt: 'Local lifestyle and neighbourhood character',
-          position: 'center center'
+          alt: 'Downtown café and tree-lined street at golden hour',
+          position: '56% 44%',
+          label: 'Neighbourhood streets',
+          kb: { fromScale: 1.10, fromX: '0.5%', fromY: '0.2%', toScale: 1.04, toX: '-0.4%', toY: '-0.2%' }
         },
         {
-          type: 'image',
+          src: 'assets/GettyImages-1388101414.jpg',
+          alt: 'Refined home interior with natural light and architectural detail',
+          position: '54% 46%',
+          label: 'Light & space',
+          kb: { fromScale: 1.02, fromX: '-0.5%', fromY: '0.4%', toScale: 1.08, toX: '0.3%', toY: '-0.5%' }
+        },
+        {
+          src: 'assets/GettyImages-2162730763.jpg',
+          alt: 'Quiet established neighbourhood street beneath mature trees',
+          position: '52% 46%',
+          label: 'Established roots',
+          kb: { fromScale: 1.03, fromX: '0.9%', fromY: '0.1%', toScale: 1.09, toX: '-0.5%', toY: '-0.3%' }
+        },
+        {
           src: 'assets/GettyImages-2161701333.jpg',
-          alt: 'Neighbourhood establishing view across the region',
-          position: 'center center'
+          alt: 'Warm evening glow across a neighbourhood street at sunset',
+          position: '50% 42%',
+          label: 'Golden hour',
+          kb: { fromScale: 1.02, fromX: '0.2%', fromY: '0.7%', toScale: 1.08, toX: '-0.2%', toY: '-0.4%' }
+        },
+        {
+          src: 'assets/GettyImages-152021463.jpg',
+          alt: 'Morning light over the Burlington and Hamilton waterfront',
+          position: '62% 38%',
+          label: 'Lakefront mornings',
+          kb: { fromScale: 1.02, fromX: '-0.8%', fromY: '0.3%', toScale: 1.08, toX: '0.5%', toY: '-0.4%' }
         }
       ];
 
+      const locationLabel = mediaWrap.querySelector('.hero__location-label');
+      const locationName = locationLabel?.querySelector('.hero__location-name');
+
+      const updateLocationLabel = (index) => {
+        if (!locationLabel || !locationName) return;
+        locationLabel.classList.remove('is-visible');
+        window.setTimeout(() => {
+          locationName.textContent = heroMedia[index]?.label || 'Burlington & Hamilton';
+          locationLabel.classList.add('is-visible');
+        }, prefersReducedMotion ? 0 : 200);
+      };
+
+      // Clear old elements
       mediaWrap.querySelectorAll('.hero__video, .hero__media-slide').forEach((node) => node.remove());
 
+      // Build slide elements
       const slides = heroMedia.map((item, index) => {
-        const el = document.createElement(item.type === 'video' ? 'video' : 'img');
-        el.className = `hero__media-slide ${item.type === 'video' ? 'hero__media-slide--video' : 'hero__media-slide--image'}`;
+        const el = document.createElement('img');
+        el.className = 'hero__media-slide hero__media-slide--image';
         el.style.setProperty('--hero-media-position', item.position || 'center center');
 
-        if (item.type === 'video') {
-          el.src = item.src;
-          el.poster = item.poster;
-          el.muted = true;
-          el.loop = true;
-          el.autoplay = !prefersReducedMotion;
-          el.playsInline = true;
-          el.preload = index === 0 ? 'auto' : 'metadata';
-          el.setAttribute('aria-hidden', 'true');
-        } else {
-          el.src = item.src;
-          el.alt = item.alt || '';
-          el.decoding = 'async';
-          el.loading = index === 0 ? 'eager' : 'lazy';
-          el.fetchPriority = index === 0 ? 'high' : 'auto';
+        // Per-slide Ken Burns — distinct motion per image
+        if (!prefersReducedMotion && item.kb) {
+          el.style.setProperty('--kb-from-scale', item.kb.fromScale);
+          el.style.setProperty('--kb-from-x',     item.kb.fromX);
+          el.style.setProperty('--kb-from-y',     item.kb.fromY);
+          el.style.setProperty('--kb-to-scale',   item.kb.toScale);
+          el.style.setProperty('--kb-to-x',       item.kb.toX);
+          el.style.setProperty('--kb-to-y',       item.kb.toY);
         }
 
-        if (index === 0) el.classList.add('is-active');
+        el.src = item.src;
+        el.alt = item.alt || '';
+        el.decoding = 'async';
+        el.loading = index === 0 ? 'eager' : 'lazy';
+        el.fetchPriority = index === 0 ? 'high' : 'auto';
+
+        if (index === 0) {
+          el.classList.add('is-active');
+          // First frame enters quickly, then transition normalises
+          if (!prefersReducedMotion) el.classList.add('hero__media-slide--first-frame');
+        }
+
         mediaWrap.prepend(el);
         return el;
       });
 
-      if (slides[0]?.tagName === 'VIDEO' && !prefersReducedMotion) {
-        slides[0].play().catch(() => {});
+      updateLocationLabel(0);
+
+      // Lift the fast-entry class once the initial fade-in is done
+      if (!prefersReducedMotion) {
+        window.setTimeout(() => slides[0]?.classList.remove('hero__media-slide--first-frame'), 1500);
       }
 
       if (prefersReducedMotion || slides.length < 2) return;
 
       let activeIndex = 0;
-      const slideDuration = 4200;
+      const slideDuration = 6500; // shorter than before — stays calm but doesn't feel static
 
       window.setInterval(() => {
-        const current = slides[activeIndex];
+        const prev = slides[activeIndex];
         activeIndex = (activeIndex + 1) % slides.length;
         const next = slides[activeIndex];
 
-        current.classList.remove('is-active');
+        prev.classList.remove('is-active');
         next.classList.add('is-active');
-
-        slides.forEach((slide, index) => {
-          if (slide.tagName !== 'VIDEO') return;
-          if (index === activeIndex) {
-            slide.play().catch(() => {});
-          } else {
-            slide.pause();
-          }
-        });
+        updateLocationLabel(activeIndex);
       }, slideDuration);
     })();
   </script>
@@ -3305,6 +907,112 @@
     teamImage.style.display = 'none';
   }
 })();
+</script>
+
+<script>
+
+/* ── Communities interactive map ─────────────────────────────────── */
+(function () {
+  'use strict';
+
+  var section = document.querySelector('.cm-section');
+  if (!section) return;
+
+  /* Community content */
+  var data = {
+    burlington:  {
+      name:  'Burlington',
+      line:  'Lakefront, family neighbourhoods and commuter access. Best results come from timing, presentation and pricing precision.',
+      route: 'qew'
+    },
+    waterdown:   {
+      name:  'Waterdown',
+      line:  'Escarpment living with strong family demand. Buyers compare lifestyle, lot size and long-term value closely.',
+      route: '403'
+    },
+    hamilton:    {
+      name:  'Hamilton',
+      line:  'A street-by-street market where character, condition and pricing strategy matter. Local nuance changes everything.',
+      route: 'qew'
+    },
+    flamborough: {
+      name:  'Flamborough',
+      line:  'Larger lots, rural calm and lifestyle-driven buyers. Properties need clear positioning and strong visual presentation.',
+      route: 'rural'
+    },
+    oakville:    {
+      name:  'Oakville',
+      line:  'High expectations, polished listings and discerning buyers. Presentation quality has an outsized impact.',
+      route: 'qew'
+    },
+    milton:      {
+      name:  'Milton',
+      line:  'Family-driven demand, newer homes and commuter appeal. Buyers look closely at space, schools and future growth.',
+      route: '407'
+    }
+  };
+
+  var pins     = Array.from(section.querySelectorAll('.cm-pin'));
+  var routes   = Array.from(section.querySelectorAll('.cm-road[data-route]'));
+  var focusEl  = section.querySelector('.cm-focus');
+  var nameEl   = section.querySelector('.cm-focus__name');
+  var lineEl   = section.querySelector('.cm-focus__line');
+  var promptEl = section.querySelector('.cm-focus__prompt');
+  var current  = null;
+  var FADE_MS  = 200;
+
+  function activate(name) {
+    if (name === current) return;
+    if (!data[name]) return;
+    current = name;
+
+    /* Dim inactive pins; highlight active */
+    section.classList.add('has-active');
+    pins.forEach(function (pin) {
+      pin.classList.toggle('is-active', pin.getAttribute('data-community') === name);
+    });
+
+    /* Highlight the relevant route corridor */
+    routes.forEach(function (route) {
+      var wasActive = route.classList.contains('is-active');
+      var willActive = route.getAttribute('data-route') === data[name].route;
+      if (!wasActive && willActive) {
+        route.classList.remove('is-active');
+        void route.getBoundingClientRect(); /* force reflow to restart animation */
+      }
+      route.classList.toggle('is-active', willActive);
+    });
+
+    /* Crossfade the left-panel focus summary */
+    if (focusEl) {
+      focusEl.classList.add('is-fading');
+      setTimeout(function () {
+        if (promptEl) promptEl.textContent = 'Current focus';
+        if (nameEl)   nameEl.textContent   = data[name].name;
+        if (lineEl)   lineEl.textContent   = data[name].line;
+        focusEl.classList.remove('is-fading');
+      }, FADE_MS);
+    }
+  }
+
+  /* SVG map pins — click, hover, focus and keyboard */
+  pins.forEach(function (pin) {
+    var name = pin.getAttribute('data-community');
+    pin.addEventListener('click',      function () { activate(name); });
+    pin.addEventListener('mouseenter', function () { activate(name); });
+    pin.addEventListener('focus',      function () { activate(name); });
+    pin.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        activate(name);
+      }
+    });
+  });
+
+  /* Activate Burlington on load */
+  activate('burlington');
+
+}());
 </script>
 </body>
 </html>
